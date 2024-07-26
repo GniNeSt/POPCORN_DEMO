@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 public class DealerCtrlObj : MonoBehaviour
 {
-    List<CardCtrlObj> _cards;
+    [SerializeField]RectTransform ATrans, BTrans;
+    [SerializeField]List<CardCtrlObj> _cards;
     [SerializeField]List<Vector2> _spreadPos;
 
     [SerializeField] Vector2Int _maxCount;
@@ -12,55 +13,54 @@ public class DealerCtrlObj : MonoBehaviour
 
     IEnumerator SpreadCard()
     {
+        CreateRandomArea();
         _cards = new List<CardCtrlObj>();
         for (int i = 0; i < _maxSpawnCardNum; i++)
         {
             GameObject go = Resources.Load("Prefabs/CardObj") as GameObject;
             go = Instantiate(go, GetComponent<RectTransform>());
+            CardCtrlObj cco = go.GetComponent<CardCtrlObj>();
 
-            _cards.Add(go.GetComponent<CardCtrlObj>());
-            Debug.Log(go.name);
             //카드 배치
             RectTransform rectTransform = go.GetComponent<RectTransform>();
-            
+            rectTransform.anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
+
             int num = Random.Range(0, _spreadPos.Count);
-            //do
-            //{
-            //    rectTransform.anchoredPosition = Vector2.Lerp(rectTransform.anchoredPosition, _spreadPos[num], 0.1f * Time.deltaTime);
-            //    yield return new WaitForSeconds(1f);
-            //}
-            //while (Vector2.Distance(rectTransform.anchoredPosition, _spreadPos[num]) < 0.001f);
-            rectTransform.anchoredPosition = _spreadPos[num];
+            int cardNum = InGameManager._instance.GetNextRandomBinary();
+            cco.InitSet(string.Format("{0}",cardNum), _spreadPos[num]);
             _spreadPos.Remove(_spreadPos[num]);
+
+
+            _cards.Add(cco);
+
             yield return new WaitForSeconds(1f);    
         }
     }
-    private void Awake()
+    public void CreateRandomArea()
     {
-        RectTransform ATrans = transform.GetChild(0) as RectTransform;
-        RectTransform BTrans = transform.GetChild(1) as RectTransform;
-        float xDistance = (BTrans.anchoredPosition.x - ATrans.anchoredPosition.x)/_maxCount.x;
-        float yDistance = (BTrans.anchoredPosition.y - ATrans.anchoredPosition.y)/ _maxCount.y;
+        float xDistance = (BTrans.anchoredPosition.x - ATrans.anchoredPosition.x) / _maxCount.x;
+        float yDistance = (BTrans.anchoredPosition.y - ATrans.anchoredPosition.y) / _maxCount.y;
+        Vector2 cardBoardPos = transform.GetChild(0).GetComponent<RectTransform>().anchoredPosition;
         _spreadPos = new List<Vector2>();
         float posX = ATrans.anchoredPosition.x, posY = ATrans.anchoredPosition.y;
         for (int i = 0; i < _maxCount.x; i++)
         {
             for (int j = 0; j < _maxCount.y; j++)
             {
-                _spreadPos.Add(new Vector2(posX, posY));
+                _spreadPos.Add(cardBoardPos + new Vector2(posX, posY));
                 posY += yDistance;
             }
             posX += xDistance;
+            posY = ATrans.anchoredPosition.y;
         }
     }
 
 
-
     public void RemoveCards()
-    {
+    {        
         for (int i = 0; i < _cards.Count; i++)
         {
-            _cards.Remove(_cards[i]);
+            Destroy(_cards[i].gameObject);
         }
         _cards = new List<CardCtrlObj>();
     }
@@ -72,9 +72,9 @@ public class DealerCtrlObj : MonoBehaviour
             Debug.Log("card");
         }
 
-        if (GUI.Button(new Rect(0, 40, 120, 40), "Make Card"))
+        if (GUI.Button(new Rect(0, 40, 120, 40), "Remove Card"))
         {
-            StartCoroutine("RemoveCards");
+            RemoveCards();
         }
     }
 }
