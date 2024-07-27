@@ -59,6 +59,14 @@ public class CardCtrlObj : MonoBehaviour
             case CardState.Idle:
                 break;
             case CardState.REMOVE:
+                Color color = _img.color;
+                if(color.a > 0.001f)
+                {
+                    color.a -=Time.deltaTime * 2f;
+                    _img.color = color;
+                    _numTMP.color = color;
+                }
+                else Destroy(gameObject);
                 break;
         }
     }
@@ -67,5 +75,10 @@ public class CardCtrlObj : MonoBehaviour
     {
         _img.sprite = _cardImg[1];
         _numTMP.enabled = true;
+    }
+    public void SetState(int stateNum)
+    {
+        _curState = (CardState)stateNum;
+        
     }
 }

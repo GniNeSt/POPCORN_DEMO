@@ -60,7 +60,7 @@ public class DealerCtrlObj : MonoBehaviour
     {        
         for (int i = 0; i < _cards.Count; i++)
         {
-            Destroy(_cards[i].gameObject);
+            _cards[i].SetState(3);
         }
         _cards = new List<CardCtrlObj>();
     }
