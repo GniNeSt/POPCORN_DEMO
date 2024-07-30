@@ -38,8 +38,8 @@ SpriteAtlas:
       padding: 4
       blockOffset: 1
       allowAlphaSplitting: 0
-      enableRotation: 1
-      enableTightPacking: 1
+      enableRotation: 0
+      enableTightPacking: 0
       enableAlphaDilation: 0
     secondaryTextureSettings: {}
     variantMultiplier: 1
@@ -49,6 +49,7 @@ SpriteAtlas:
     - {fileID: 2800000, guid: 15682ec7de1cb1e41b79f87361442c85, type: 3}
     - {fileID: 2800000, guid: 795451f653fc78144a353019193b394b, type: 3}
     - {fileID: 2800000, guid: 07d5bba9f10d2ff4ea1298f0501e4313, type: 3}
+    - {fileID: 2800000, guid: fbaeaacbd5de1c649874b67353bc4634, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -57,12 +58,14 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 795451f653fc78144a353019193b394b, type: 3}
   - {fileID: 21300000, guid: 15682ec7de1cb1e41b79f87361442c85, type: 3}
   - {fileID: 21300000, guid: 07d5bba9f10d2ff4ea1298f0501e4313, type: 3}
+  - {fileID: 21300000, guid: fbaeaacbd5de1c649874b67353bc4634, type: 3}
   - {fileID: 21300000, guid: 689c963f510e8cd4ab6ccbc4c091a1a7, type: 3}
   - {fileID: 21300000, guid: 946478bf744f74f4e9b1c5ba7ef342f6, type: 3}
   m_PackedSpriteNamesToIndex:
   - BACK_STRIPES
   - BACK_SHARP
   - Empty
+  - Chunky simple 1b
   - BACK_CROSSHATCH
   - BACK_HYPNO
   m_RenderDataMap: {}
