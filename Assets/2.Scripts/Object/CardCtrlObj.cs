@@ -23,6 +23,10 @@ public class CardCtrlObj : MonoBehaviour
 
         REMOVE
     }
+    public int _cardNum
+    {
+        get { return int.Parse(_numTMP.text); }
+    }
     public void InitSet(string numText, Vector2 dir)
     {
         _curState = CardState.Spawn;

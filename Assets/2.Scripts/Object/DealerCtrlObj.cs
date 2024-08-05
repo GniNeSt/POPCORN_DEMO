@@ -35,6 +35,10 @@ public class DealerCtrlObj : MonoBehaviour
 
             yield return new WaitForSeconds(1f);    
         }
+        foreach(CardCtrlObj cco in _cards)
+        {
+            InGameManager._instance.AddCardList(cco._cardNum);
+        }
     }
     public void CreateRandomArea()
     {
@@ -63,6 +67,7 @@ public class DealerCtrlObj : MonoBehaviour
             _cards[i].SetState(3);
         }
         _cards = new List<CardCtrlObj>();
+        InGameManager._instance.AddCardList(0, true);
     }
     private void OnGUI()
     {

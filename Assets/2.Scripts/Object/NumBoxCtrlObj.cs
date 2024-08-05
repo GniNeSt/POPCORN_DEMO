@@ -25,7 +25,7 @@ public class NumBoxCtrlObj : MonoBehaviour
             TMPS[num] = tmps.GetChild(num).GetComponent<TextMeshProUGUI>();
         }
     }
-    public void NumChangeDown()
+    public void NumChangeDown( int powNum)
     {
         if (isChanging) return;
         isChanging = true;
@@ -36,12 +36,14 @@ public class NumBoxCtrlObj : MonoBehaviour
                 TMPS[2].text = "1";
                 _animator.SetInteger("State", 1);
                 _curState = NumState.one;
+                InGameManager._instance.setBinarySetting(powNum, true);
                 break;
             case NumState.one:
                 TMPS[1].text = "0";
                 TMPS[2].text = "0";
                 _animator.SetInteger("State", 1);
                 _curState = NumState.zero;
+                InGameManager._instance.setBinarySetting(powNum, false);
                 break;
         }
     }
