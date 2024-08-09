@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - HintBox
+  - Dealer
+  - ScoreUI
+  - NumBox
+  - TimeUI
   layers:
   - Default
   - TransparentFX

@@ -1,13 +1,21 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-
 public class InGameManager : TSingleTon<InGameManager>
 {
-    [SerializeField]int _result;
-    [SerializeField]List<int> _binaryNum;
-    List<int> _cardsNum;
+    HintChecker _hintBox;
+    DealerCtrlObj _dealerCtrlObj;
+    ScoreCtrlObj _scoreCtrlObj;
+    TextMeshProUGUI _timeTMP;
+
+    List<NumBoxCtrlObj> _numBoxCtrlObjs;
+    [SerializeField] int _result;
+    int _curScore;
+    [SerializeField] List<int> _binaryNum;
+    [SerializeField] Dictionary<int, CardCtrlObj> _cardsDict;
     int[] _binarySetting;
     int _binaryCellCount = 8;
+    float _curTime, _maxTime = 15f;
     public enum InGameStatus
     {
         InGame,
@@ -20,22 +28,29 @@ public class InGameManager : TSingleTon<InGameManager>
     }
     public void setBinarySetting(int place, bool isOn = true)
     {
-        if(isOn)
+        if (isOn)
             _binarySetting[place] = 1;
         else
             _binarySetting[place] = 0;
 
         _result = 0;
-        for(int i = 0; i < _binarySetting.Length; i++)
+        for (int i = 0; i < _binarySetting.Length; i++)
         {
             _result += _binarySetting[i] * (int)Mathf.Pow(2, i);
         }
+        _hintBox.SetResult("" + _result);
     }
-    public void AddCardList(int num, bool reset = false)
+    public void AddCardList(CardCtrlObj co, bool reset = false)
     {
-        if(reset)_cardsNum = new List<int>();
+        if (reset)
+        {
+            _cardsDict = new Dictionary<int, CardCtrlObj>();
+        }
         else
-            _cardsNum.Add(num);
+        {
+            _cardsDict.Add(co._cardNum, co);
+        }
+
     }
     public int GetNextRandomBinary()
     {
@@ -52,15 +67,87 @@ public class InGameManager : TSingleTon<InGameManager>
             _binaryNum.Add(i);
         }
     }
+    public void FindResult()
+    {
+        CardCtrlObj co = null;
+        RectTransform rt;
+        if (_cardsDict.TryGetValue(_result, out co))
+        {
+            rt = co.GetComponent<RectTransform>();
+            Debug.LogFormat("제출한 번호를 찾았습니다! : {0}", _result);
+            _curScore += _result;
+            _scoreCtrlObj.setText("" + _curScore);
+            ResetNumCardNPad();
+            _curTime = _maxTime;
+        }
+        else
+        {
+            Debug.Log("제출한 번호가 없습니다.");
+        }
+    }
+    public void ResetNumCardNPad()
+    {
+        _dealerCtrlObj.RemoveCards();
+        for (int i = 0; i < _binarySetting.Length; i++)
+        {
+            _binarySetting[i] = 0;
+        }
+        _result = 0;
+        _hintBox.SetResult("0");
+        foreach (NumBoxCtrlObj nbc in _numBoxCtrlObjs)
+        {
+            if (nbc._state == NumBoxCtrlObj.NumState.one)
+            {
+                nbc.NumReset();
+            }
+            nbc.isChanging = false;
+        }
+        _cardsDict = new Dictionary<int, CardCtrlObj>();
+
+
+
+        //임시
+        _dealerCtrlObj.TurnStart();
+    }
     protected override void Init()
     {
         SetBinaryNum();
-        _cardsNum = new List<int>();
         _binarySetting = new int[_binaryCellCount];
         _result = 0;
+        _curScore = 0;
+        _curTime = _maxTime;
+        _cardsDict = new Dictionary<int, CardCtrlObj>();
+
+
+        GameObject go = GameObject.FindGameObjectWithTag("HintBox");
+        _hintBox = go.GetComponent<HintChecker>();
+        go = GameObject.FindGameObjectWithTag("Dealer");
+        _dealerCtrlObj = go.GetComponent<DealerCtrlObj>();
+        go = GameObject.FindGameObjectWithTag("ScoreUI");
+        _scoreCtrlObj = go.GetComponent<ScoreCtrlObj>();
+        go = GameObject.FindGameObjectWithTag("TimeUI");
+        _timeTMP = go.GetComponent<TextMeshProUGUI>();
+
+
+        GameObject[] gos = new GameObject[_binaryCellCount];
+        _numBoxCtrlObjs = new List<NumBoxCtrlObj>();
+        gos = GameObject.FindGameObjectsWithTag("NumBox");
+        foreach (GameObject g in gos)
+        {
+            _numBoxCtrlObjs.Add(g.GetComponent<NumBoxCtrlObj>());
+        }
     }
     private void Update()
     {
-        
+        if (_curTime > 0)
+        {
+            _curTime -= Time.deltaTime;
+            if (_curTime < 0)
+            {
+                _curTime = _maxTime;
+                ResetNumCardNPad();
+            }
+            _timeTMP.text = (int)_curTime + "";
+        }
     }
 }

@@ -1,15 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 public class DealerCtrlObj : MonoBehaviour
 {
-    [SerializeField]RectTransform ATrans, BTrans;
-    [SerializeField]List<CardCtrlObj> _cards;
-    [SerializeField]List<Vector2> _spreadPos;
+    [SerializeField] RectTransform ATrans, BTrans;
+    [SerializeField] List<CardCtrlObj> _cards;
+    [SerializeField] List<Vector2> _spreadPos;
 
     [SerializeField] Vector2Int _maxCount;
-    [SerializeField]int _maxSpawnCardNum = 3;
+    [SerializeField] int _maxSpawnCardNum = 3;
 
     IEnumerator SpreadCard()
     {
@@ -27,17 +26,17 @@ public class DealerCtrlObj : MonoBehaviour
 
             int num = Random.Range(0, _spreadPos.Count);
             int cardNum = InGameManager._instance.GetNextRandomBinary();
-            cco.InitSet(string.Format("{0}",cardNum), _spreadPos[num]);
+            cco.InitSet(string.Format("{0}", cardNum), _spreadPos[num]);
             _spreadPos.Remove(_spreadPos[num]);
 
 
             _cards.Add(cco);
 
-            yield return new WaitForSeconds(1f);    
+            yield return new WaitForSeconds(1f);
         }
-        foreach(CardCtrlObj cco in _cards)
+        foreach (CardCtrlObj cco in _cards)
         {
-            InGameManager._instance.AddCardList(cco._cardNum);
+            InGameManager._instance.AddCardList(cco);
         }
     }
     public void CreateRandomArea()
@@ -58,28 +57,29 @@ public class DealerCtrlObj : MonoBehaviour
             posY = ATrans.anchoredPosition.y;
         }
     }
-
-
     public void RemoveCards()
-    {        
+    {
         for (int i = 0; i < _cards.Count; i++)
         {
             _cards[i].SetState(3);
         }
         _cards = new List<CardCtrlObj>();
-        InGameManager._instance.AddCardList(0, true);
+        InGameManager._instance.AddCardList(null, true);
+    }
+    public void SubmitBtnDown()
+    {
+        InGameManager._instance.FindResult();
+    }
+    public void TurnStart()
+    {
+        StartCoroutine("SpreadCard");
     }
     private void OnGUI()
     {
-        if(GUI.Button(new Rect(0,0, 120, 40), "Make Card"))
+        if (GUI.Button(new Rect(0, 0, 120, 40), "Make Card"))
         {
-            StartCoroutine("SpreadCard");
             Debug.Log("card");
-        }
-
-        if (GUI.Button(new Rect(0, 40, 120, 40), "Remove Card"))
-        {
-            RemoveCards();
+            StartCoroutine("SpreadCard");
         }
     }
 }

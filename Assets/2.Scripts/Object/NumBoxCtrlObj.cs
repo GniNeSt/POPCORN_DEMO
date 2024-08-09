@@ -8,7 +8,9 @@ public class NumBoxCtrlObj : MonoBehaviour
     Animator _animator;
     TextMeshProUGUI[] TMPS;
     NumState _curState;
-    bool isChanging;
+    public bool isChanging { get; set; }
+    [SerializeField] int powNum;
+    public NumState _state { get { return _curState; } }
     public enum NumState
     {
         zero,
@@ -25,7 +27,7 @@ public class NumBoxCtrlObj : MonoBehaviour
             TMPS[num] = tmps.GetChild(num).GetComponent<TextMeshProUGUI>();
         }
     }
-    public void NumChangeDown( int powNum)
+    public void NumChangeDown()
     {
         if (isChanging) return;
         isChanging = true;
@@ -49,7 +51,6 @@ public class NumBoxCtrlObj : MonoBehaviour
     }
     public void NumChangeReset()
     {
-        isChanging = false;
         switch (_curState)
         {
             case NumState.zero:
@@ -62,5 +63,21 @@ public class NumBoxCtrlObj : MonoBehaviour
                 break;
         }
         _animator.SetInteger("State", 0);
+        isChanging = false;
+    }
+    public void NumReset()
+    {
+        switch (_curState)
+        {
+            case NumState.zero:
+                break;
+            case NumState.one:
+                TMPS[1].text = "0";
+                TMPS[2].text = "0";
+                _animator.SetInteger("State", 1);
+                _curState = NumState.zero;
+                break;
+        }
+        isChanging = false;
     }
 }

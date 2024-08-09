@@ -38,11 +38,14 @@ public class HintChecker : MonoBehaviour
         _curvHeight = _curvRectTransform.sizeDelta.y;
         _curvPos = _curvRectTransform.anchoredPosition;
     }
-
+    public void SetResult(string result)
+    {
+        _resultTMP.text = result;
+    }
     public void PointDwonEvent()
     {
         _curvRectTransform.anchoredPosition = _curvPos + Vector2.up * _curvHeight * 0.8f;
-        _resultTMP.text = ""+InGameManager._instance._curResult;
+        //_resultTMP.text = ""+InGameManager._instance._curResult;
         _curCheckStat = CheckerStatus.Down;
     }
     public void PointUpEvent()
