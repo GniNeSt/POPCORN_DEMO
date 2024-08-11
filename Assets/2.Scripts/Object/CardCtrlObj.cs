@@ -52,11 +52,6 @@ public class CardCtrlObj : MonoBehaviour
                     _rectTrans.anchoredPosition = Vector2.Lerp(_rectTrans.anchoredPosition, _moveTarget, _speed * Time.deltaTime);
                     _rectTrans.rotation = Quaternion.Lerp(_rectTrans.rotation, Quaternion.Euler(_randomRotateValue), _speed * Time.deltaTime);
                 }
-                else
-                {
-                    _curState = CardState.Flip;
-                    _animator.SetTrigger("Flip");
-                }
                 break;
             case CardState.Flip:
                 break;
@@ -74,7 +69,11 @@ public class CardCtrlObj : MonoBehaviour
                 break;
         }
     }
-
+    public void CardFlip()
+    {
+        _curState = CardState.Flip;
+        _animator.SetTrigger("Flip");
+    }
     public void CardFlipToFront()
     {
         _img.sprite = _cardImg[1];

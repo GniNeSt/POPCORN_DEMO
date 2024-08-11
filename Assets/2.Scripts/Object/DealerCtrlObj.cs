@@ -37,6 +37,7 @@ public class DealerCtrlObj : MonoBehaviour
         foreach (CardCtrlObj cco in _cards)
         {
             InGameManager._instance.AddCardList(cco);
+            cco.CardFlip();
         }
     }
     public void CreateRandomArea()
