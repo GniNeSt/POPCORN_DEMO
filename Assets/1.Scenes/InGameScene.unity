@@ -3474,7 +3474,7 @@ MonoBehaviour:
   BTrans: {fileID: 944293566}
   _cards: []
   _spreadPos: []
-  _maxCount: {x: 5, y: 5}
+  _maxCount: {x: 5, y: 3}
   _maxSpawnCardNum: 3
 --- !u!1 &1485561351
 GameObject:
