@@ -13,11 +13,16 @@ public class InGameManager : TSingleTon<InGameManager>
     int _curScore;
     [SerializeField] List<int> _binaryNum;
     [SerializeField] Dictionary<int, CardCtrlObj> _cardsDict;
+
+
     int[] _binarySetting;
     int _binaryCellCount = 8;
-    float _curTime, _maxTime = 15f;
+    float _curTime, _maxTime = 15.99f;
+    InGameStatus _curStatus;
+
     public enum InGameStatus
     {
+        SpreadCards,
         InGame,
 
         None
@@ -117,7 +122,7 @@ public class InGameManager : TSingleTon<InGameManager>
         _curScore = 0;
         _curTime = _maxTime;
         _cardsDict = new Dictionary<int, CardCtrlObj>();
-
+        _curStatus = InGameStatus.None;
 
         GameObject go = GameObject.FindGameObjectWithTag("HintBox");
         _hintBox = go.GetComponent<HintChecker>();
@@ -137,17 +142,37 @@ public class InGameManager : TSingleTon<InGameManager>
             _numBoxCtrlObjs.Add(g.GetComponent<NumBoxCtrlObj>());
         }
     }
+    public void SetGameStatus(InGameStatus status)
+    {
+        _curStatus = status;
+    }
     private void Update()
     {
-        if (_curTime > 0)
+        switch (_curStatus)
         {
-            _curTime -= Time.deltaTime;
-            if (_curTime < 0)
-            {
-                _curTime = _maxTime;
-                ResetNumCardNPad();
-            }
-            _timeTMP.text = (int)_curTime + "";
+            case InGameStatus.None:
+                if(_binaryNum.Count < 3)
+                {
+                    //게임 종료
+                    SceneCtrlManager._instance.GoScene(SceneCtrlManager.SceneName.Start);
+                }
+                break;
+            case InGameStatus.SpreadCards:
+                break;
+            case InGameStatus.InGame:
+                if (_curTime > 0)
+                {
+                    _curTime -= Time.deltaTime;
+                    if (_curTime < 0)
+                    {
+                        _curTime = _maxTime;
+                        ResetNumCardNPad();
+                        SetGameStatus(InGameStatus.None);
+                    }
+                    _timeTMP.text = (int)_curTime + "";
+                }
+                break;
+
         }
     }
 }

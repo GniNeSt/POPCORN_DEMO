@@ -31,6 +31,9 @@ public class NumBoxCtrlObj : MonoBehaviour
     {
         if (isChanging) return;
         isChanging = true;
+
+        SoundManager._instance.PlaySFX(SoundManager.SFXClipName.Heal);
+
         switch (_curState)
         {
             case NumState.zero:

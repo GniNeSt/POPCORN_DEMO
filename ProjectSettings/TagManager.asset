@@ -9,6 +9,7 @@ TagManager:
   - ScoreUI
   - NumBox
   - TimeUI
+  - SettingUIPop
   layers:
   - Default
   - TransparentFX
