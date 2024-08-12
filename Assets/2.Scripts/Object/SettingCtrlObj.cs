@@ -9,16 +9,19 @@ public class SettingCtrlObj : MonoBehaviour
     [SerializeField]Slider _sfxSlider;
     public void SwitchSettingUI(bool on = true)
     {
-        transform.GetChild(0).gameObject.SetActive(on);
+        gameObject.SetActive(on);
     }
     public void SetSoundValue()
     {
         SoundManager._instance.SetBgmVolume(_bgmSlider.value);
         SoundManager._instance.SetSFXVolume(_sfxSlider.value);
+        
+        //초기화로 바꿀예정
     }
     public void GoHomeScnene()
     {
         SceneCtrlManager._instance.GoScene(SceneCtrlManager.SceneName.Start);
+        SwitchSettingUI(false);
     }
 
     public void EnterColorSet(TextMeshProUGUI tmp)

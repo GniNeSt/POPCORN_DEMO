@@ -6,8 +6,7 @@ public class SoundManager : TSingleTon<SoundManager>
     public enum BGMClipName
     {
         Start,
-        Normal1,
-        Normal2,
+        InGame,
         Hard,
         GameOver,
 
@@ -36,8 +35,6 @@ public class SoundManager : TSingleTon<SoundManager>
         go = new GameObject("SFX", typeof(AudioSource));
         go.transform.parent = transform;
         LoadClips();
-
-        PlayBGM(BGMClipName.Start);
     }
     void LoadClips()
     {

@@ -84,6 +84,9 @@ public class InGameManager : TSingleTon<InGameManager>
             _scoreCtrlObj.setText("" + _curScore);
             ResetNumCardNPad();
             _curTime = _maxTime;
+
+
+            SetGameStatus(InGameStatus.None);
         }
         else
         {

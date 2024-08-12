@@ -12,5 +12,7 @@ public class SceneCtrlManager : TSingleTon<SceneCtrlManager>
     public void GoScene(SceneName sc)
     {
         SceneManager.LoadScene((int)sc);
+
+        SoundManager._instance.PlayBGM((SoundManager.BGMClipName)(sc));
     }
 }
