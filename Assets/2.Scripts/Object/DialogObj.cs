@@ -12,9 +12,25 @@ public class DialogObj : MonoBehaviour//PopUpUI Load로 Init함수를 호출하자!!!
     [SerializeField] Image[] _bgImg;
     //변수
     bool _omission;//생략 Bool
-
+    bool _newOrder;
+    float _curtime;
     IEnumerator SequentialPrint(string text)
     {
+        while (_newOrder)
+        {
+            yield return new WaitForSeconds(_nextTextDelayTime);
+        }
+        transform.GetChild(0).gameObject.SetActive(true);
+        _dialogText.color = Color.white;
+        foreach (var tmp in _fadeoutTxt)
+        {
+            tmp.color = Color.white;
+        }
+        foreach (var img in _bgImg)
+        {
+            img.color = Color.white;
+        }
+        _newOrder = true;
         //초기화
         _omission = false;
         _dialogText.text = "_";
@@ -34,64 +50,55 @@ public class DialogObj : MonoBehaviour//PopUpUI Load로 Init함수를 호출하자!!!
             }
         }
         _dialogText.text = text;
-        yield return new WaitForSeconds(2.0f);
-        StartCoroutine(FadeOut());
+        yield return new WaitForSeconds(1.0f);
+        _newOrder = false;
         yield return null;
     }
-    IEnumerator FadeOut()
+    private void Update()
     {
-        Color color = _dialogText.color;
-        while (true)
+        if (!_newOrder)
         {
-            if (color.a > 0.001f)
+            _curtime += Time.deltaTime;
+            if(_curtime >= 2.0f)
             {
-                color.a -= Time.deltaTime * 2f;
-                _dialogText.color = color;
-                foreach (var tmp in _fadeoutTxt)
+                Color color = _dialogText.color;
+                if (color.a > 0.001f)
                 {
-                    tmp.color = color;
+                    color.a -= Time.deltaTime * 2f;
+                    _dialogText.color = color;
+                    foreach (var tmp in _fadeoutTxt)
+                    {
+                        tmp.color = color;
+                    }
+                    foreach (var img in _bgImg)
+                    {
+                        img.color = color;
+                    }
+                    if (_omission)
+                    {
+                        _omission = false;
+                        _curtime = 2.5f;
+                    }
                 }
-                foreach (var img in _bgImg)
+                else
                 {
-                    img.color = color;
+                    color.a = 0;
+                    _dialogText.color = color;
+                    foreach (var tmp in _fadeoutTxt)
+                    {
+                        tmp.color = color;
+                    }
+                    foreach (var img in _bgImg)
+                    {
+                        img.color = color;
+                    }
                 }
-                if (_omission)
-                {
-                    _omission = false;
-
-                    break;
-                }
-                yield return new WaitForSeconds(0.05f);
             }
-            else
-            {
-                break;
-            }
         }
-        color.a = 0;
-        _dialogText.color = color;
-        foreach (var tmp in _fadeoutTxt)
-        {
-            tmp.color = color;
-        }
-        foreach (var img in _bgImg)
-        {
-            img.color = color;
-        }
-        yield return null;
     }
     public void PrintTxt(string text)
     {
-        transform.GetChild(0).gameObject.SetActive(true);
-        _dialogText.color = Color.white;
-        foreach (var tmp in _fadeoutTxt)
-        {
-            tmp.color = Color.white;
-        }
-        foreach (var img in _bgImg)
-        {
-            img.color = Color.white;
-        }
+        _curtime = 0;
         //순차 출력 Coroutine?
         StartCoroutine(SequentialPrint(text));
     }

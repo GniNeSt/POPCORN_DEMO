@@ -5,12 +5,20 @@ public class DialogManager : MonoBehaviour
     [SerializeField] DialogObj[] _dialogBox;
     [SerializeField] Dialog[] _dialogs;
     Dialog[] _basicDialogs;
+    [SerializeField] Dialog[] _EndingDialogs;
     public enum DialogType
     {
         DialogCanvasUp,
         DialogCanvasDown,
 
         None
+    }
+    public enum DialogProperty
+    {
+        Start,
+        InGame,
+
+        End
     }
     [Serializable]
     public class Dialog
@@ -41,11 +49,15 @@ public class DialogManager : MonoBehaviour
         //    _dialogBox[i] = go.GetComponent<DialogObj>();
         //    _dialogBox[i].InitDalog();
         //}
-        foreach(var db in _dialogBox)
+        foreach (var db in _dialogBox)
         {
             db.transform.GetChild(0).gameObject.SetActive(false);
         }
         _basicDialogs = new Dialog[4];
+        InitDialog();
+    }
+    public void InitDialog()
+    {
         _basicDialogs[0] =
             new Dialog(string.Format("{0}{1}{2}", "훌륭합니다.\n당신에게 남은 기회는 \"", InGameManager._instance._curHp,
                 "\"입니다."));
@@ -56,17 +68,19 @@ public class DialogManager : MonoBehaviour
         "\"밖에 남지 않았습니다."));
         _basicDialogs[3] = new Dialog("...훌륭합니다.");
     }
-    public void PrintDialog(int num, bool isBasic = true)
+    public void PrintDialog(int num, DialogProperty dP = DialogProperty.InGame)
     {
-        if (isBasic)
+        switch (dP)
         {
-            _dialogBox[(int)_basicDialogs[num]._type].PrintTxt(_basicDialogs[num]._txt);
-
-        }
-        else
-        {
-            _dialogBox[(int)_dialogs[num]._type].PrintTxt(_dialogs[num]._txt);
-
+            case DialogProperty.InGame:
+                _dialogBox[(int)_basicDialogs[num]._type].PrintTxt(_basicDialogs[num]._txt);
+                break;
+            case DialogProperty.End:
+                _dialogBox[(int)_EndingDialogs[num]._type].PrintTxt(_EndingDialogs[num]._txt);
+                break;
+            case DialogProperty.Start:
+                _dialogBox[(int)_dialogs[num]._type].PrintTxt(_dialogs[num]._txt);
+                break;
         }
     }
 }

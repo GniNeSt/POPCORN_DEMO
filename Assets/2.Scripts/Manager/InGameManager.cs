@@ -22,6 +22,7 @@ public class InGameManager : TSingleTon<InGameManager>
     float _curTime, _maxTime = 15.99f;
     InGameStatus _curStatus;
 
+    int _targetScore = 255;
     int _hpCount = 10;
     public int _curHp
     {
@@ -32,6 +33,7 @@ public class InGameManager : TSingleTon<InGameManager>
     {
         SpreadCards,
         InGame,
+        End,
 
         None
     }
@@ -101,6 +103,7 @@ public class InGameManager : TSingleTon<InGameManager>
         else
         {
             _hpCount--;
+            _dialogManager.InitDialog();
 
             if (_hpCount < 4)
                 _dialogManager.PrintDialog(2);
@@ -181,6 +184,10 @@ public class InGameManager : TSingleTon<InGameManager>
                     //게임 종료
                     SceneCtrlManager._instance.GoScene(SceneCtrlManager.SceneName.Start);
                 }
+                if(_curScore >= _targetScore)
+                {
+                    _curStatus = InGameStatus.End;
+                }
                 break;
             case InGameStatus.SpreadCards:
                 break;
@@ -197,6 +204,14 @@ public class InGameManager : TSingleTon<InGameManager>
                     }
                     _timeTMP.text = (int)_curTime + "";
                 }
+                break;
+            case InGameStatus.End:
+                _dialogManager.PrintDialog(0, DialogManager.DialogProperty.End);
+                _dialogManager.PrintDialog(1, DialogManager.DialogProperty.End);
+                _dialogManager.PrintDialog(2, DialogManager.DialogProperty.End);
+                _dialogManager.PrintDialog(3, DialogManager.DialogProperty.End);
+                _curScore = 0;
+                _curStatus = InGameStatus.None;
                 break;
 
         }
