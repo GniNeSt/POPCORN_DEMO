@@ -34,6 +34,7 @@ public class DialogObj : MonoBehaviour//PopUpUI Load로 Init함수를 호출하자!!!
     }
     public void PrintTxt(string text)
     {
+        transform.GetChild(0).gameObject.SetActive(true);
         //순차 출력 Coroutine?
         StartCoroutine(SequentialPrint(text));
     }
@@ -43,12 +44,6 @@ public class DialogObj : MonoBehaviour//PopUpUI Load로 Init함수를 호출하자!!!
         _canvas.worldCamera = Camera.main;
         _dialogText.text = "오류 :\n텍스트가 초기화 되지 않았습니다.";
     }
-    //임시=================================
-    private void Awake()
-    {
-        InitDalog();
-    }
-    //===================================
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))

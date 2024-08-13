@@ -8,6 +8,8 @@ public class InGameManager : TSingleTon<InGameManager>
     ScoreCtrlObj _scoreCtrlObj;
     TextMeshProUGUI _timeTMP;
 
+    DialogManager _dialogManager;
+
     List<NumBoxCtrlObj> _numBoxCtrlObjs;
     [SerializeField] int _result;
     int _curScore;
@@ -119,6 +121,9 @@ public class InGameManager : TSingleTon<InGameManager>
     }
     protected override void Init()
     {
+        base.Init();
+        _dialogManager = GameObject.FindGameObjectWithTag("DialogManager").GetComponent<DialogManager>();
+
         SetBinaryNum();
         _binarySetting = new int[_binaryCellCount];
         _result = 0;
