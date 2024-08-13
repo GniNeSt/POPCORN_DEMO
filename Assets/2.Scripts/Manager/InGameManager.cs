@@ -22,6 +22,12 @@ public class InGameManager : TSingleTon<InGameManager>
     float _curTime, _maxTime = 15.99f;
     InGameStatus _curStatus;
 
+    int _hpCount = 10;
+    public int _curHp
+    {
+        get { return _hpCount; }
+    }
+
     public enum InGameStatus
     {
         SpreadCards,
@@ -82,6 +88,7 @@ public class InGameManager : TSingleTon<InGameManager>
         {
             rt = co.GetComponent<RectTransform>();
             Debug.LogFormat("제출한 번호를 찾았습니다! : {0}", _result);
+            _dialogManager.PrintDialog(0);
             _curScore += _result;
             _scoreCtrlObj.setText("" + _curScore);
             ResetNumCardNPad();
@@ -89,9 +96,18 @@ public class InGameManager : TSingleTon<InGameManager>
 
 
             SetGameStatus(InGameStatus.None);
+            //클리어 추가할것 0814
         }
         else
         {
+            _hpCount--;
+
+            if (_hpCount < 4)
+                _dialogManager.PrintDialog(2);
+            else
+            {
+                _dialogManager.PrintDialog(1);
+            }
             Debug.Log("제출한 번호가 없습니다.");
         }
     }
@@ -141,7 +157,7 @@ public class InGameManager : TSingleTon<InGameManager>
         _scoreCtrlObj.setText("0");
         go = GameObject.FindGameObjectWithTag("TimeUI");
         _timeTMP = go.GetComponent<TextMeshProUGUI>();
-        _timeTMP.text = ""+(int)_maxTime;
+        _timeTMP.text = "" + (int)_maxTime;
 
         GameObject[] gos = new GameObject[_binaryCellCount];
         _numBoxCtrlObjs = new List<NumBoxCtrlObj>();
@@ -160,7 +176,7 @@ public class InGameManager : TSingleTon<InGameManager>
         switch (_curStatus)
         {
             case InGameStatus.None:
-                if(_binaryNum.Count < 3)
+                if (_binaryNum.Count < 3)
                 {
                     //게임 종료
                     SceneCtrlManager._instance.GoScene(SceneCtrlManager.SceneName.Start);
@@ -174,6 +190,7 @@ public class InGameManager : TSingleTon<InGameManager>
                     _curTime -= Time.deltaTime;
                     if (_curTime < 0)
                     {
+                        _dialogManager.PrintDialog(1);
                         _curTime = _maxTime;
                         ResetNumCardNPad();
                         SetGameStatus(InGameStatus.None);

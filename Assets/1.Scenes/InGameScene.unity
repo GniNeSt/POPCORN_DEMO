@@ -2692,6 +2692,17 @@ MonoBehaviour:
   _spreadPos: []
   _maxCount: {x: 5, y: 3}
   _maxSpawnCardNum: 3
+--- !u!114 &1643123858 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5487800473847199066, guid: 3316a074e50bdd948ac7cef14d65df09, type: 3}
+  m_PrefabInstance: {fileID: 5487800473652337029}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1578ab3cb9dfdd24cbb66d0ec0e35863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1649492794
 GameObject:
   m_ObjectHideFlags: 0
@@ -3180,6 +3191,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1868515107}
   m_CullTransparentMesh: 1
+--- !u!114 &1952256708 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5368050081162588955, guid: 9f93b9d6186636e4c96e69864ad4841f, type: 3}
+  m_PrefabInstance: {fileID: 5368050081220350531}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1578ab3cb9dfdd24cbb66d0ec0e35863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2057973393
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3765,10 +3787,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogCanvasDown
       objectReference: {fileID: 0}
-    - target: {fileID: 5368050081162588948, guid: 9f93b9d6186636e4c96e69864ad4841f, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5368050081162588959, guid: 9f93b9d6186636e4c96e69864ad4841f, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -3950,10 +3968,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogCanvasUp
       objectReference: {fileID: 0}
-    - target: {fileID: 5487800473847199071, guid: 3316a074e50bdd948ac7cef14d65df09, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3316a074e50bdd948ac7cef14d65df09, type: 3}
 --- !u!1001 &6547955315522273056
@@ -3963,6 +3977,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6547955315606465664, guid: ea451f30799d4e246b50a19dceca87b3, type: 3}
+      propertyPath: _dialogBox.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6547955315606465664, guid: ea451f30799d4e246b50a19dceca87b3, type: 3}
+      propertyPath: _dialogBox.Array.data[0]
+      value: 
+      objectReference: {fileID: 1643123858}
+    - target: {fileID: 6547955315606465664, guid: ea451f30799d4e246b50a19dceca87b3, type: 3}
+      propertyPath: _dialogBox.Array.data[1]
+      value: 
+      objectReference: {fileID: 1952256708}
     - target: {fileID: 6547955315606465726, guid: ea451f30799d4e246b50a19dceca87b3, type: 3}
       propertyPath: m_Name
       value: DialogManager
