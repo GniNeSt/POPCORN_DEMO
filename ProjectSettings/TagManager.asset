@@ -10,6 +10,7 @@ TagManager:
   - NumBox
   - TimeUI
   - SettingUIPop
+  - Fatigue
   layers:
   - Default
   - TransparentFX

@@ -7,6 +7,7 @@ public class NumBoxCtrlObj : MonoBehaviour
 {
     Animator _animator;
     TextMeshProUGUI[] TMPS;
+    TextMeshProUGUI _fatigueTmp;
     NumState _curState;
     public bool isChanging { get; set; }
     [SerializeField] int powNum;
@@ -26,6 +27,10 @@ public class NumBoxCtrlObj : MonoBehaviour
         {
             TMPS[num] = tmps.GetChild(num).GetComponent<TextMeshProUGUI>();
         }
+
+        transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = ""+Mathf.Pow(2,powNum);
+        _fatigueTmp = GameObject.FindGameObjectWithTag("Fatigue").GetComponent<TextMeshProUGUI>();
+        _fatigueTmp.text = "0";
     }
     public void NumChangeDown()
     {
@@ -51,6 +56,8 @@ public class NumBoxCtrlObj : MonoBehaviour
                 InGameManager._instance.setBinarySetting(powNum, false);
                 break;
         }
+        _fatigueTmp.text = (int.Parse(_fatigueTmp.text) + 1) + "";
+        //애니메이션 마지막 프레임에 state 리셋 버그확인, IngameManager
     }
     public void NumChangeReset()
     {

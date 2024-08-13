@@ -32,7 +32,7 @@ public class DealerCtrlObj : MonoBehaviour
 
             _cards.Add(cco);
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
         }
         foreach (CardCtrlObj cco in _cards)
         {

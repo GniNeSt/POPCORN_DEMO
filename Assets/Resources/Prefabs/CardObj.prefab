@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveTarget: {x: 0, y: 0}
-  _speed: 8
+  _speed: 16
   _cardImg:
   - {fileID: 21300000, guid: 795451f653fc78144a353019193b394b, type: 3}
   - {fileID: 21300000, guid: 07d5bba9f10d2ff4ea1298f0501e4313, type: 3}

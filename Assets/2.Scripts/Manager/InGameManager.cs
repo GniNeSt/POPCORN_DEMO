@@ -133,9 +133,10 @@ public class InGameManager : TSingleTon<InGameManager>
         _dealerCtrlObj = go.GetComponent<DealerCtrlObj>();
         go = GameObject.FindGameObjectWithTag("ScoreUI");
         _scoreCtrlObj = go.GetComponent<ScoreCtrlObj>();
+        _scoreCtrlObj.setText("0");
         go = GameObject.FindGameObjectWithTag("TimeUI");
         _timeTMP = go.GetComponent<TextMeshProUGUI>();
-
+        _timeTMP.text = ""+(int)_maxTime;
 
         GameObject[] gos = new GameObject[_binaryCellCount];
         _numBoxCtrlObjs = new List<NumBoxCtrlObj>();
