@@ -12,6 +12,7 @@ TagManager:
   - SettingUIPop
   - Fatigue
   - DialogManager
+  - EndPanel
   layers:
   - Default
   - TransparentFX

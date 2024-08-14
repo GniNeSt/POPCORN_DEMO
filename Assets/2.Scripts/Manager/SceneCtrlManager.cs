@@ -11,6 +11,12 @@ public class SceneCtrlManager : TSingleTon<SceneCtrlManager>
     }
     public void GoScene(SceneName sc)
     {
+        switch (sc)
+        {
+            case SceneName.Start:
+                Destroy(InGameManager._instance.gameObject);
+                break;
+        }
         SceneManager.LoadScene((int)sc);
 
         SoundManager._instance.PlayBGM((SoundManager.BGMClipName)(sc));

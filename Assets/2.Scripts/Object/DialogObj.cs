@@ -14,12 +14,15 @@ public class DialogObj : MonoBehaviour//PopUpUI Load로 Init함수를 호출하자!!!
     bool _omission;//생략 Bool
     bool _newOrder;
     float _curtime;
-    IEnumerator SequentialPrint(string text)
+    IEnumerator SequentialPrint(string text, bool wait = false)
     {
         while (_newOrder)
         {
+            if(!wait)
+                _omission = true;
             yield return new WaitForSeconds(_nextTextDelayTime);
         }
+        _omission = false;
         transform.GetChild(0).gameObject.SetActive(true);
         _dialogText.color = Color.white;
         foreach (var tmp in _fadeoutTxt)
@@ -50,7 +53,18 @@ public class DialogObj : MonoBehaviour//PopUpUI Load로 Init함수를 호출하자!!!
             }
         }
         _dialogText.text = text;
-        yield return new WaitForSeconds(1.0f);
+
+        while (wait)
+        {
+            if (_omission)
+            {
+                _omission = false;
+                InGameManager._instance._dialogClickEvent = true;
+                break;
+            }
+            yield return new WaitForSeconds(_nextTextDelayTime);
+        }
+        if(!wait) yield return new WaitForSeconds(_nextTextDelayTime);
         _newOrder = false;
         yield return null;
     }
@@ -96,11 +110,11 @@ public class DialogObj : MonoBehaviour//PopUpUI Load로 Init함수를 호출하자!!!
             }
         }
     }
-    public void PrintTxt(string text)
+    public void PrintTxt(string text, bool wait = false)
     {
         _curtime = 0;
         //순차 출력 Coroutine?
-        StartCoroutine(SequentialPrint(text));
+        StartCoroutine(SequentialPrint(text, wait));
     }
     public void InitDalog()
     {

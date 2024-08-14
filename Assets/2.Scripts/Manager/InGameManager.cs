@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 public class InGameManager : TSingleTon<InGameManager>
 {
     HintChecker _hintBox;
@@ -9,6 +10,8 @@ public class InGameManager : TSingleTon<InGameManager>
     TextMeshProUGUI _timeTMP;
 
     DialogManager _dialogManager;
+
+    Image _endPanelImg;
 
     List<NumBoxCtrlObj> _numBoxCtrlObjs;
     [SerializeField] int _result;
@@ -22,15 +25,21 @@ public class InGameManager : TSingleTon<InGameManager>
     float _curTime, _maxTime = 15.99f;
     InGameStatus _curStatus;
 
+    bool _submitError;
     int _targetScore = 255;
     int _hpCount = 10;
+    int _sceneNum = 0;
     public int _curHp
     {
         get { return _hpCount; }
     }
-
+    public InGameStatus _InGameStatus
+    {
+        get { return _curStatus; }
+    }
     public enum InGameStatus
     {
+        Start,
         SpreadCards,
         InGame,
         End,
@@ -40,6 +49,10 @@ public class InGameManager : TSingleTon<InGameManager>
     public int _curResult
     {
         get { return _result; }
+    }
+    public bool _dialogClickEvent
+    {
+        get; set;
     }
     public void setBinarySetting(int place, bool isOn = true)
     {
@@ -102,16 +115,9 @@ public class InGameManager : TSingleTon<InGameManager>
         }
         else
         {
-            _hpCount--;
-            _dialogManager.InitDialog();
-
-            if (_hpCount < 4)
-                _dialogManager.PrintDialog(2);
-            else
-            {
-                _dialogManager.PrintDialog(1);
-            }
             Debug.Log("제출한 번호가 없습니다.");
+            _submitError = true;
+
         }
     }
     public void ResetNumCardNPad()
@@ -133,15 +139,13 @@ public class InGameManager : TSingleTon<InGameManager>
         }
         _cardsDict = new Dictionary<int, CardCtrlObj>();
 
-
-
-        //임시
-        _dealerCtrlObj.TurnStart();
     }
     protected override void Init()
     {
         base.Init();
         _dialogManager = GameObject.FindGameObjectWithTag("DialogManager").GetComponent<DialogManager>();
+        _endPanelImg = GameObject.FindGameObjectWithTag("EndPanel").transform.GetChild(0).GetComponent<Image>();
+        _endPanelImg.gameObject.SetActive(false);
 
         SetBinaryNum();
         _binarySetting = new int[_binaryCellCount];
@@ -174,6 +178,11 @@ public class InGameManager : TSingleTon<InGameManager>
     {
         _curStatus = status;
     }
+    public void PlayEndScene()
+    {
+        _curStatus = InGameStatus.End;
+        _dialogManager.PrintDialog(0, DialogManager.DialogProperty.End, true);
+    }
     private void Update()
     {
         switch (_curStatus)
@@ -184,34 +193,82 @@ public class InGameManager : TSingleTon<InGameManager>
                     //게임 종료
                     SceneCtrlManager._instance.GoScene(SceneCtrlManager.SceneName.Start);
                 }
-                if(_curScore >= _targetScore)
+                if (_curScore >= _targetScore)
                 {
-                    _curStatus = InGameStatus.End;
+                    _dialogManager.PrintDialog(3);
+                    PlayEndScene();
+                }
+                break;
+            case InGameStatus.Start://수정!!!!!!!!!!!!
+                if (_sceneNum >= 3)
+                {
+                    _curTime -= Time.deltaTime;
+                    if (_curTime <= _maxTime - 3)
+                    {
+                        _curTime = _maxTime;
+                        _sceneNum = 0;
+                        SetGameStatus(InGameStatus.SpreadCards);
+                    }
+                    break;
+                }
+                else if (_dialogClickEvent)
+                {
+                    _dialogManager.PrintDialog(_sceneNum++, DialogManager.DialogProperty.Start, true);
+                    _dialogClickEvent = false;
                 }
                 break;
             case InGameStatus.SpreadCards:
+                _curTime -= Time.deltaTime;
+                if (_curTime <= _maxTime - 2)
+                {
+                    _dealerCtrlObj.TurnStart();
+                    _curTime = _maxTime;
+                    _curStatus = InGameStatus.InGame;
+                }
                 break;
             case InGameStatus.InGame:
                 if (_curTime > 0)
                 {
                     _curTime -= Time.deltaTime;
-                    if (_curTime < 0)
+                    if (_curTime < 0 || _submitError)
                     {
-                        _dialogManager.PrintDialog(1);
-                        _curTime = _maxTime;
-                        ResetNumCardNPad();
-                        SetGameStatus(InGameStatus.None);
+                        _submitError = false;
+                        _hpCount--;
+                        if (_hpCount <= 0)
+                        {
+                            PlayEndScene();
+                        }
+                        else
+                        {
+                            _dialogManager.PrintDialog(1);
+                            _curTime = _maxTime;
+                            ResetNumCardNPad();
+                            if (_curStatus != InGameStatus.End) //end & spread & item 추가예쩡 0814
+                                SetGameStatus(InGameStatus.None);
+                        }
                     }
                     _timeTMP.text = (int)_curTime + "";
                 }
                 break;
             case InGameStatus.End:
-                _dialogManager.PrintDialog(0, DialogManager.DialogProperty.End);
-                _dialogManager.PrintDialog(1, DialogManager.DialogProperty.End);
-                _dialogManager.PrintDialog(2, DialogManager.DialogProperty.End);
-                _dialogManager.PrintDialog(3, DialogManager.DialogProperty.End);
-                _curScore = 0;
-                _curStatus = InGameStatus.None;
+                _endPanelImg.gameObject.SetActive(true);
+                if (_endPanelImg.color.a < 1f)
+                {
+                    Color color = _endPanelImg.color;
+                    color.a += Time.deltaTime * 2f;
+                    _endPanelImg.color = color;
+                }
+                if (_dialogClickEvent)
+                {
+                    if (_sceneNum > 3)
+                    {
+                        SceneCtrlManager._instance.GoScene(SceneCtrlManager.SceneName.Start);
+                        break;
+                    }
+                    _dialogManager.PrintDialog(_sceneNum++, DialogManager.DialogProperty.End, true);
+                    _dialogClickEvent = false;
+
+                }
                 break;
 
         }

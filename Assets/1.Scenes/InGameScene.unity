@@ -1224,7 +1224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1611,7 +1611,7 @@ GameObject:
   - component: {fileID: 788408417}
   m_Layer: 5
   m_Name: EndPanel
-  m_TagString: Untagged
+  m_TagString: EndPanel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4057,6 +4057,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5487800473847199064, guid: 3316a074e50bdd948ac7cef14d65df09, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5487800473847199067, guid: 3316a074e50bdd948ac7cef14d65df09, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -4155,6 +4159,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 6547955315606465664, guid: ea451f30799d4e246b50a19dceca87b3, type: 3}
+      propertyPath: _StartDialogs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6547955315606465664, guid: ea451f30799d4e246b50a19dceca87b3, type: 3}
       propertyPath: _dialogBox.Array.data[0]
       value: 
       objectReference: {fileID: 1643123858}
@@ -4162,6 +4170,23 @@ PrefabInstance:
       propertyPath: _dialogBox.Array.data[1]
       value: 
       objectReference: {fileID: 1952256708}
+    - target: {fileID: 6547955315606465664, guid: ea451f30799d4e246b50a19dceca87b3, type: 3}
+      propertyPath: _StartDialogs.Array.data[0]._text
+      value: "\uC5B4\uB5A4 \uBAA8\uC2B5\uC744 \uBCF4\uC5EC\uC904\uC9C0 \uAE30\uB300\uD558\uACE0
+        \uC788\uC2B5\uB2C8\uB2E4."
+      objectReference: {fileID: 0}
+    - target: {fileID: 6547955315606465664, guid: ea451f30799d4e246b50a19dceca87b3, type: 3}
+      propertyPath: _StartDialogs.Array.data[1]._text
+      value: "\uC774\uBC88 \uBAA9\uD45C\uC810\uC218\uB294 255\uC785\uB2C8\uB2E4."
+      objectReference: {fileID: 0}
+    - target: {fileID: 6547955315606465664, guid: ea451f30799d4e246b50a19dceca87b3, type: 3}
+      propertyPath: _StartDialogs.Array.data[0]._dialogType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6547955315606465664, guid: ea451f30799d4e246b50a19dceca87b3, type: 3}
+      propertyPath: _StartDialogs.Array.data[1]._dialogType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6547955315606465726, guid: ea451f30799d4e246b50a19dceca87b3, type: 3}
       propertyPath: m_Name
       value: DialogManager

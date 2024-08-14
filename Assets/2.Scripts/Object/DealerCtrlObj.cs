@@ -70,18 +70,28 @@ public class DealerCtrlObj : MonoBehaviour
     }
     public void SubmitBtnDown()
     {
-        InGameManager._instance.FindResult();
+        if(InGameManager._instance._InGameStatus == InGameManager.InGameStatus.InGame)
+            InGameManager._instance.FindResult();
+        else
+        {
+            Debug.Log("정답 제출 불가");
+        }
     }
     public void TurnStart()
     {
         StartCoroutine("SpreadCard");
     }
-    private void OnGUI()
+    private void Awake()
     {
-        if (GUI.Button(new Rect(0, 0, 120, 40), "Make Card"))
-        {
-            Debug.Log("card");
-            StartCoroutine("SpreadCard");
-        }
+        InGameManager._instance._dialogClickEvent = true;
+        InGameManager._instance.SetGameStatus(InGameManager.InGameStatus.Start);
     }
+    //private void OnGUI()
+    //{
+    //    if (GUI.Button(new Rect(0, 0, 120, 40), "Make Card"))
+    //    {
+    //        Debug.Log("card");
+    //        StartCoroutine("SpreadCard");
+    //    }
+    //}
 }

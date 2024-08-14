@@ -5,6 +5,7 @@ public class DialogManager : MonoBehaviour
     [SerializeField] DialogObj[] _dialogBox;
     [SerializeField] Dialog[] _dialogs;
     Dialog[] _basicDialogs;
+    [SerializeField] Dialog[] _StartDialogs;
     [SerializeField] Dialog[] _EndingDialogs;
     public enum DialogType
     {
@@ -15,6 +16,7 @@ public class DialogManager : MonoBehaviour
     }
     public enum DialogProperty
     {
+        Tutorial,
         Start,
         InGame,
 
@@ -68,18 +70,22 @@ public class DialogManager : MonoBehaviour
         "\"밖에 남지 않았습니다."));
         _basicDialogs[3] = new Dialog("...훌륭합니다.");
     }
-    public void PrintDialog(int num, DialogProperty dP = DialogProperty.InGame)
-    {
+    public void PrintDialog(int num, DialogProperty dP = DialogProperty.InGame, bool wait = false)
+    {        
+        InitDialog();
         switch (dP)
         {
             case DialogProperty.InGame:
-                _dialogBox[(int)_basicDialogs[num]._type].PrintTxt(_basicDialogs[num]._txt);
+                _dialogBox[(int)_basicDialogs[num]._type].PrintTxt(_basicDialogs[num]._txt, wait);
                 break;
             case DialogProperty.End:
-                _dialogBox[(int)_EndingDialogs[num]._type].PrintTxt(_EndingDialogs[num]._txt);
+                _dialogBox[(int)_EndingDialogs[num]._type].PrintTxt(_EndingDialogs[num]._txt, wait);
                 break;
             case DialogProperty.Start:
-                _dialogBox[(int)_dialogs[num]._type].PrintTxt(_dialogs[num]._txt);
+                _dialogBox[(int)_StartDialogs[num]._type].PrintTxt(_StartDialogs[num]._txt, wait);
+                break;
+            case DialogProperty.Tutorial:
+                _dialogBox[(int)_dialogs[num]._type].PrintTxt(_dialogs[num]._txt, wait);
                 break;
         }
     }
