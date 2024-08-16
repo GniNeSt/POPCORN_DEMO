@@ -34,7 +34,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -173,7 +173,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 7255991975513831096}
           m_TargetAssemblyTypeName: SettingCtrlObj, Assembly-CSharp
-          m_MethodName: SetSoundValue
+          m_MethodName: InitValue
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -305,7 +305,19 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7255991975513831096}
+        m_TargetAssemblyTypeName: SettingCtrlObj, Assembly-CSharp
+        m_MethodName: SetSoundValue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1496888504986319390
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,7 +388,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -484,7 +496,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC801\uC6A9\n"
+  m_text: "\uCD08\uAE30\uD654\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 184373a569c79184a8ab462129134e2a, type: 2}
   m_sharedMaterial: {fileID: -3895551458286344974, guid: 184373a569c79184a8ab462129134e2a, type: 2}
@@ -956,7 +968,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1496888505543105787
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1053,6 +1065,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bgmSlider: {fileID: 1496888505937288557}
   _sfxSlider: {fileID: 1496888504879809390}
+  _nameTMP: {fileID: 1496888505540594920}
+  _scoreTMP: {fileID: 1496888506200381965}
 --- !u!1 &1496888505580788020
 GameObject:
   m_ObjectHideFlags: 0
@@ -1778,7 +1792,19 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7255991975513831096}
+        m_TargetAssemblyTypeName: SettingCtrlObj, Assembly-CSharp
+        m_MethodName: SetSoundValue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1496888505980511967
 GameObject:
   m_ObjectHideFlags: 0

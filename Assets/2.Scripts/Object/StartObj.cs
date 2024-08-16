@@ -9,5 +9,7 @@ public class StartObj : MonoBehaviour
         GameManager._instance.CheckPlayerSet();
 
         SoundManager._instance.PlayBGM(SoundManager.BGMClipName.Start);
+        SaveManager._instance.Load("dummie");
+
     }
 }

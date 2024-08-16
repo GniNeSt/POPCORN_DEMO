@@ -1,22 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 public class SettingCtrlObj : MonoBehaviour
 {
-    [SerializeField]Slider _bgmSlider;
-    [SerializeField]Slider _sfxSlider;
+    [SerializeField] Slider _bgmSlider;
+    [SerializeField] Slider _sfxSlider;
+    [SerializeField] TextMeshProUGUI _nameTMP;
+    [SerializeField] TextMeshProUGUI _scoreTMP;
     public void SwitchSettingUI(bool on = true)
     {
         gameObject.SetActive(on);
+        _bgmSlider.value = PlayerPrefs.GetFloat("BGMValue");
+        _sfxSlider.value = PlayerPrefs.GetFloat("SFXValue");
+        _nameTMP.text = SaveManager._instance._nameInfo + "의 최고기록";
+        _scoreTMP.text = "" + SaveManager._instance._scoreInfo;
+        Debug.LogFormat("{0},{1}",SaveManager._instance._nameInfo, SaveManager._instance._scoreInfo);
     }
     public void SetSoundValue()
     {
         SoundManager._instance.SetBgmVolume(_bgmSlider.value);
         SoundManager._instance.SetSFXVolume(_sfxSlider.value);
-        
-        //초기화로 바꿀예정
+        SaveManager._instance.soundSave(_bgmSlider.value, _sfxSlider.value);
+    }
+    public void InitValue()
+    {
+        _bgmSlider.value = _sfxSlider.value = 0.5f;
+        SetSoundValue();
     }
     public void GoHomeScnene()
     {

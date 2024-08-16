@@ -3,6 +3,7 @@ using UnityEngine;
 public class GameManager : TSingleTon<GameManager>
 {
     GameObject _settingPopUI;
+    SettingCtrlObj _settingCtrlObj;
     protected override void Init()
     {
         base.Init();
@@ -11,6 +12,8 @@ public class GameManager : TSingleTon<GameManager>
             GameObject go = Resources.Load("Prefabs/SettingCanvas") as GameObject;
             _settingPopUI = Instantiate(go);
             DontDestroyOnLoad(_settingPopUI);
+            _settingCtrlObj = _settingPopUI.GetComponent<SettingCtrlObj>();
+            
             _settingPopUI.SetActive(false);
         }
     }
@@ -22,7 +25,7 @@ public class GameManager : TSingleTon<GameManager>
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            _settingPopUI.SetActive(!_settingPopUI.activeSelf);
+            _settingCtrlObj.SwitchSettingUI(!_settingPopUI.activeSelf);
         }
     }
 }

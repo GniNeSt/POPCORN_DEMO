@@ -96,16 +96,7 @@ public class DialogObj : MonoBehaviour//PopUpUI Load로 Init함수를 호출하자!!!
                 }
                 else
                 {
-                    color.a = 0;
-                    _dialogText.color = color;
-                    foreach (var tmp in _fadeoutTxt)
-                    {
-                        tmp.color = color;
-                    }
-                    foreach (var img in _bgImg)
-                    {
-                        img.color = color;
-                    }
+                    transform.GetChild(0).gameObject.SetActive(false);
                 }
             }
         }

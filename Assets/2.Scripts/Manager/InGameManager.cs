@@ -48,7 +48,7 @@ public class InGameManager : TSingleTon<InGameManager>
     }
     public int _curResult
     {
-        get { return _result; }
+        get { return _curScore; }
     }
     public bool _dialogClickEvent
     {
@@ -173,6 +173,10 @@ public class InGameManager : TSingleTon<InGameManager>
         {
             _numBoxCtrlObjs.Add(g.GetComponent<NumBoxCtrlObj>());
         }
+
+
+        //임시 저장 ==============
+        SaveManager._instance.Load("정효준");
     }
     public void SetGameStatus(InGameStatus status)
     {
@@ -198,9 +202,15 @@ public class InGameManager : TSingleTon<InGameManager>
                     _dialogManager.PrintDialog(3);
                     PlayEndScene();
                 }
+                else
+                {
+                    _curStatus = InGameStatus.InGame;
+                    _dealerCtrlObj.TurnStart();
+
+                }
                 break;
             case InGameStatus.Start://수정!!!!!!!!!!!!
-                if (_sceneNum >= 3)
+                if (_sceneNum >= 2)
                 {
                     _curTime -= Time.deltaTime;
                     if (_curTime <= _maxTime - 3)
@@ -251,6 +261,7 @@ public class InGameManager : TSingleTon<InGameManager>
                 }
                 break;
             case InGameStatus.End:
+                SaveManager._instance.Save();
                 _endPanelImg.gameObject.SetActive(true);
                 if (_endPanelImg.color.a < 1f)
                 {
