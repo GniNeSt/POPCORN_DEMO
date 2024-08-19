@@ -7,6 +7,7 @@ public class DialogManager : MonoBehaviour
     Dialog[] _basicDialogs;
     [SerializeField] Dialog[] _StartDialogs;
     [SerializeField] Dialog[] _EndingDialogs;
+    [SerializeField] Dialog[] _ItemEquipDialogs;
     public enum DialogType
     {
         DialogCanvasUp,
@@ -19,6 +20,7 @@ public class DialogManager : MonoBehaviour
         Tutorial,
         Start,
         InGame,
+        Item,
 
         End
     }
@@ -86,6 +88,9 @@ public class DialogManager : MonoBehaviour
                 break;
             case DialogProperty.Tutorial:
                 _dialogBox[(int)_dialogs[num]._type].PrintTxt(_dialogs[num]._txt, wait);
+                break;
+            case DialogProperty.Item:
+                _dialogBox[(int)_ItemEquipDialogs[num]._type].PrintTxt(_ItemEquipDialogs[num]._txt);
                 break;
         }
     }

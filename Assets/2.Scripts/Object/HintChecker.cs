@@ -19,9 +19,13 @@ public class HintChecker : MonoBehaviour
         Down,
         Up
     }
+    public bool _isFixed
+    {
+        get;set;
+    }
     IEnumerator CurvDown()
     {
-        while(_curvRectTransform.anchoredPosition.y >= _curvPos.y && _curCheckStat == CheckerStatus.Up)
+        while(_curvRectTransform.anchoredPosition.y >= _curvPos.y && _curCheckStat == CheckerStatus.Up && !_isFixed)
         {
             _curvRectTransform.anchoredPosition -= Vector2.up * _downSpeed;
             yield return new WaitForSeconds(0.1f);

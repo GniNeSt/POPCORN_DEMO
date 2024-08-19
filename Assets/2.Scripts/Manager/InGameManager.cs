@@ -22,7 +22,8 @@ public class InGameManager : TSingleTon<InGameManager>
 
     int[] _binarySetting;
     int _binaryCellCount = 8;
-    float _curTime, _maxTime = 15.99f;
+    float _curTime;
+    float _maxTime = 15.99f;
     InGameStatus _curStatus;
 
     bool _submitError;
@@ -53,6 +54,10 @@ public class InGameManager : TSingleTon<InGameManager>
     public bool _dialogClickEvent
     {
         get; set;
+    }
+    public void PlusMaxTime(float time)
+    {
+        _maxTime += time;
     }
     public void setBinarySetting(int place, bool isOn = true)
     {
