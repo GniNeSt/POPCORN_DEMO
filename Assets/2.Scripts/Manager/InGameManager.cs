@@ -32,6 +32,10 @@ public class InGameManager : TSingleTon<InGameManager>
     int _hpCount = 10;
     int _sceneNum = 0;
     public int _targetScore = 666;
+    public bool _isBuffItem
+    {
+        get; set;
+    }
     public int _curHp
     {
         get { return _hpCount; }
@@ -221,8 +225,9 @@ public class InGameManager : TSingleTon<InGameManager>
                 else
                 {
                     if (true)  ///////æ∆¿Ã≈€ »πµÊ ¡∂∞«////////////////////////
-                    {
+                    {   //300¿ÃªÛ
                         _itemFlag = false;
+                        _isBuffItem = true;
                         _curStatus = InGameStatus.Item;
                     }
                     else
@@ -307,8 +312,9 @@ public class InGameManager : TSingleTon<InGameManager>
             case InGameStatus.Item:
                 if (!_itemFlag)
                 {
+                    ResetNumCardNPad();
                     _itemFlag = true;
-                    _itemManager.SetItem();
+                    _itemManager.SetItem(_isBuffItem);
                 }
                 break;
 

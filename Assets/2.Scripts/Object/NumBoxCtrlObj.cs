@@ -56,7 +56,13 @@ public class NumBoxCtrlObj : MonoBehaviour
                 InGameManager._instance.setBinarySetting(powNum, false);
                 break;
         }
-        _fatigueTmp.text = (int.Parse(_fatigueTmp.text) + 1) + "";
+        int value = int.Parse(_fatigueTmp.text) + 1;
+        _fatigueTmp.text = (value) + "";
+        if(value >= 20)
+        {
+            InGameManager._instance._isBuffItem = false;
+            InGameManager._instance.SetGameStatus(InGameManager.InGameStatus.Item);
+        }
         //애니메이션 마지막 프레임에 state 리셋 버그확인, IngameManager
     }
     public void NumChangeReset()
