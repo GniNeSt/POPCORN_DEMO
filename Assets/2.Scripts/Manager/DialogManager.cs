@@ -62,6 +62,9 @@ public class DialogManager : MonoBehaviour
     }
     public void InitDialog()
     {
+        _StartDialogs[1] =
+            new Dialog(string.Format("{0}{1}{2}{3}{4}", "이번 목표점수는 \"", InGameManager._instance._targetScore,
+                "\",\n기회는 \"", InGameManager._instance._curHp,"\"입니다."));
         _basicDialogs[0] =
             new Dialog(string.Format("{0}{1}{2}", "훌륭합니다.\n당신에게 남은 기회는 \"", InGameManager._instance._curHp,
                 "\"입니다."));

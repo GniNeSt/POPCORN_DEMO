@@ -286,7 +286,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7468858048589729435, guid: 3c5b440faa78e1042873006e70dcbe0a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 150
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 7468858048589729435, guid: 3c5b440faa78e1042873006e70dcbe0a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2054,7 +2054,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7468858048589729435, guid: 3c5b440faa78e1042873006e70dcbe0a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 150
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 7468858048589729435, guid: 3c5b440faa78e1042873006e70dcbe0a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3421,7 +3421,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7468858048589729435, guid: 3c5b440faa78e1042873006e70dcbe0a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 150
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 7468858048589729435, guid: 3c5b440faa78e1042873006e70dcbe0a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4710,10 +4710,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5487800473847199064, guid: 3316a074e50bdd948ac7cef14d65df09, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5487800473847199067, guid: 3316a074e50bdd948ac7cef14d65df09, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -4830,6 +4826,10 @@ PrefabInstance:
     - target: {fileID: 6547955315606465664, guid: ea451f30799d4e246b50a19dceca87b3, type: 3}
       propertyPath: _ItemEquipDialogs.Array.data[1]._text
       value: "\uC774\uB7F0..."
+      objectReference: {fileID: 0}
+    - target: {fileID: 6547955315606465664, guid: ea451f30799d4e246b50a19dceca87b3, type: 3}
+      propertyPath: _StartDialogs.Array.data[1]._dialogType
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6547955315606465726, guid: ea451f30799d4e246b50a19dceca87b3, type: 3}
       propertyPath: m_Name

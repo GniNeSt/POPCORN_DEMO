@@ -52,9 +52,8 @@ public class ItemCardCtrlObj : MonoBehaviour
             _dialogManager.PrintDialog(1, DialogManager.DialogProperty.Item);
 
         }
-        
-        InGameManager._instance.SetGameStatus(InGameManager.InGameStatus.InGame);
-        InGameManager._instance.DealerTurnStart();
+
+        InGameManager._instance.SetGameStatus(InGameManager.InGameStatus.SpreadCards);
     }
 
 }

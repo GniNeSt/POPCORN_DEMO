@@ -29,9 +29,9 @@ public class InGameManager : TSingleTon<InGameManager>
 
     bool _itemFlag;
     bool _submitError;
-    int _targetScore = 255;
     int _hpCount = 10;
     int _sceneNum = 0;
+    public int _targetScore = 666;
     public int _curHp
     {
         get { return _hpCount; }
@@ -227,9 +227,7 @@ public class InGameManager : TSingleTon<InGameManager>
                     }
                     else
                     {
-                        _curStatus = InGameStatus.InGame;
-                        _dealerCtrlObj.TurnStart();
-
+                        SetGameStatus(InGameStatus.SpreadCards);
                     }
 
                 }
