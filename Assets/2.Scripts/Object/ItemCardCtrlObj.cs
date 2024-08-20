@@ -11,7 +11,6 @@ public class ItemCardCtrlObj : MonoBehaviour
     public CardType _cardType;
     Image _BGImg, _IconImg;
     TextMeshProUGUI _nameTMP, _effectTMP;
-    DialogManager _dialogManager;
     
     public enum CardType
     {
@@ -27,19 +26,24 @@ public class ItemCardCtrlObj : MonoBehaviour
         _nameTMP.text = name;
         _effectTMP.text = effect;
     }
-    protected virtual void Init()
+    public virtual void Init()
     {
         _BGImg = transform.GetChild(0).GetComponent<Image>();
         _IconImg = _BGImg.transform.GetChild(0).GetComponent<Image>();
         _nameTMP = _BGImg.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         _effectTMP = _BGImg.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
 
-        _dialogManager = GameObject.FindGameObjectWithTag("DialogManager").GetComponent<DialogManager>();
+
     }
     public virtual void CardEffect()
     {
-        Debug.Log(name + "카드 효과 사용!");
-        if(_cardType == CardType.Buff)
+        Debug.Log(this + "카드 효과 사용!");
+        DialogManager _dialogManager = GameObject.FindGameObjectWithTag("DialogManager").GetComponent<DialogManager>();
+        if (_dialogManager == null)
+        {
+            Debug.Log("dialogManager가 초기화 되지 않았습니다.");
+        }
+        else if(_cardType == CardType.Buff)
         {
             _dialogManager.PrintDialog(0, DialogManager.DialogProperty.Item);
         }
@@ -48,7 +52,9 @@ public class ItemCardCtrlObj : MonoBehaviour
             _dialogManager.PrintDialog(1, DialogManager.DialogProperty.Item);
 
         }
-        //ingameManageer에서 카드 제거
+        
+        InGameManager._instance.SetGameStatus(InGameManager.InGameStatus.InGame);
+        InGameManager._instance.DealerTurnStart();
     }
 
 }

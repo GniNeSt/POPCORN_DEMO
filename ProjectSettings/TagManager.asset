@@ -13,6 +13,7 @@ TagManager:
   - Fatigue
   - DialogManager
   - EndPanel
+  - ItemManager
   layers:
   - Default
   - TransparentFX

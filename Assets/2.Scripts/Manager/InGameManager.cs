@@ -10,6 +10,7 @@ public class InGameManager : TSingleTon<InGameManager>
     TextMeshProUGUI _timeTMP;
 
     DialogManager _dialogManager;
+    ItemManager _itemManager;
 
     Image _endPanelImg;
 
@@ -26,6 +27,7 @@ public class InGameManager : TSingleTon<InGameManager>
     float _maxTime = 15.99f;
     InGameStatus _curStatus;
 
+    bool _itemFlag;
     bool _submitError;
     int _targetScore = 255;
     int _hpCount = 10;
@@ -44,6 +46,8 @@ public class InGameManager : TSingleTon<InGameManager>
         SpreadCards,
         InGame,
         End,
+        Item,
+
 
         None
     }
@@ -170,6 +174,9 @@ public class InGameManager : TSingleTon<InGameManager>
         go = GameObject.FindGameObjectWithTag("TimeUI");
         _timeTMP = go.GetComponent<TextMeshProUGUI>();
         _timeTMP.text = "" + (int)_maxTime;
+        go = GameObject.FindGameObjectWithTag("ItemManager");
+        _itemManager = go.GetComponent<ItemManager>();
+
 
         GameObject[] gos = new GameObject[_binaryCellCount];
         _numBoxCtrlObjs = new List<NumBoxCtrlObj>();
@@ -186,6 +193,10 @@ public class InGameManager : TSingleTon<InGameManager>
     public void SetGameStatus(InGameStatus status)
     {
         _curStatus = status;
+    }
+    public void DealerTurnStart()
+    {
+        _dealerCtrlObj.TurnStart();
     }
     public void PlayEndScene()
     {
@@ -209,8 +220,17 @@ public class InGameManager : TSingleTon<InGameManager>
                 }
                 else
                 {
-                    _curStatus = InGameStatus.InGame;
-                    _dealerCtrlObj.TurnStart();
+                    if (true)  ///////æ∆¿Ã≈€ »πµÊ ¡∂∞«////////////////////////
+                    {
+                        _itemFlag = false;
+                        _curStatus = InGameStatus.Item;
+                    }
+                    else
+                    {
+                        _curStatus = InGameStatus.InGame;
+                        _dealerCtrlObj.TurnStart();
+
+                    }
 
                 }
                 break;
@@ -284,6 +304,13 @@ public class InGameManager : TSingleTon<InGameManager>
                     _dialogManager.PrintDialog(_sceneNum++, DialogManager.DialogProperty.End, true);
                     _dialogClickEvent = false;
 
+                }
+                break;
+            case InGameStatus.Item:
+                if (!_itemFlag)
+                {
+                    _itemFlag = true;
+                    _itemManager.SetItem();
                 }
                 break;
 

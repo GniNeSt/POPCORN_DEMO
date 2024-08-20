@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class FixedSupport : ItemCardCtrlObj
 {
-    private void Awake()
+    public override void Init()
     {
-        Spawn();
-    }
-    public void Spawn()
-    {
-        Init();
+        base.Init();
         SetCardInfo(CardType.Buff, "고정 지지대", "결과 확인 패드가\n가려지지 않는다.");
     }
     public override void CardEffect()

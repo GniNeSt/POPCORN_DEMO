@@ -4,14 +4,10 @@ using UnityEngine;
 
 public class ClockWorkObj : ItemCardCtrlObj
 {
-    private void Awake()
+    public override void Init()
     {
-        Spawn();
-    }
-    public void Spawn()
-    {
-        Init();
-        SetCardInfo(CardType.Buff, "보조 태엽 장치", "시간 + 5");        
+        base.Init();
+        SetCardInfo(CardType.Buff, "보조 태엽 장치", "시간 + 5");   
     }
     public override void CardEffect()
     {
