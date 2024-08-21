@@ -13,5 +13,6 @@ public class AuxiliaryCharger : ItemCardCtrlObj
     {
         base.CardEffect();
         //
+        InGameManager._instance.RecoverHP(1);
     }
 }

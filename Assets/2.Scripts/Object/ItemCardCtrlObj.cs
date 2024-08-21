@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-public class ItemCardCtrlObj : MonoBehaviour
+public class ItemCardCtrlObj: MonoBehaviour
 {
     public Sprite _BGSprite,_IconSprite;
     public string _cardName;
@@ -17,7 +17,7 @@ public class ItemCardCtrlObj : MonoBehaviour
         Buff,
         Debuff
     }
-    protected void SetCardInfo(CardType ct, string name, string effect) // icon sprite 추가
+    public void SetCardInfo(CardType ct, string name, string effect) // icon sprite 추가
     {
         _cardType = ct;
         _cardName = name;
@@ -25,6 +25,10 @@ public class ItemCardCtrlObj : MonoBehaviour
 
         _nameTMP.text = name;
         _effectTMP.text = effect;
+        //Debug.LogFormat("카드 정보 : {0},{1},{2}", string.Format("", ct), _nameTMP.text, _effectTMP.text);
+        Debug.LogFormat("내부 정보 : {0},{1},{2}", string.Format("", ct), name, effect);
+
+        transform.parent.GetComponent<ItemCtrlObj>().SetEffect(this);
     }
     public virtual void Init()
     {
@@ -32,8 +36,6 @@ public class ItemCardCtrlObj : MonoBehaviour
         _IconImg = _BGImg.transform.GetChild(0).GetComponent<Image>();
         _nameTMP = _BGImg.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         _effectTMP = _BGImg.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-
-
     }
     public virtual void CardEffect()
     {

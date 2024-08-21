@@ -37,6 +37,7 @@ public class NumBoxCtrlObj : MonoBehaviour
         if (isChanging) return;
         isChanging = true;
 
+        InGameManager inGameManager = InGameManager._instance;
         SoundManager._instance.PlaySFX(SoundManager.SFXClipName.Heal);
 
         switch (_curState)
@@ -46,22 +47,23 @@ public class NumBoxCtrlObj : MonoBehaviour
                 TMPS[2].text = "1";
                 _animator.SetInteger("State", 1);
                 _curState = NumState.one;
-                InGameManager._instance.setBinarySetting(powNum, true);
+                inGameManager.setBinarySetting(powNum, true);
                 break;
             case NumState.one:
                 TMPS[1].text = "0";
                 TMPS[2].text = "0";
                 _animator.SetInteger("State", 1);
                 _curState = NumState.zero;
-                InGameManager._instance.setBinarySetting(powNum, false);
+                inGameManager.setBinarySetting(powNum, false);
                 break;
         }
-        int value = int.Parse(_fatigueTmp.text) + 1;
+        int value = int.Parse(_fatigueTmp.text) + inGameManager._btnRisk;
         _fatigueTmp.text = (value) + "";
         if(value >= 20)
         {
-            InGameManager._instance._isBuffItem = false;
-            InGameManager._instance.SetGameStatus(InGameManager.InGameStatus.Item);
+            _fatigueTmp.text = "0";
+            inGameManager._isBuffItem = false;
+            inGameManager.SetGameStatus(InGameManager.InGameStatus.Item);
         }
         //애니메이션 마지막 프레임에 state 리셋 버그확인, IngameManager
     }

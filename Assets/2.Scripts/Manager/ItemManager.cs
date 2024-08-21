@@ -1,7 +1,6 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 public class ItemManager : MonoBehaviour
 {
     ItemCtrlObj[] _ico;
@@ -34,7 +33,7 @@ public class ItemManager : MonoBehaviour
     }
     public void ItemSelect()
     {
-        foreach(var i in _ico)
+        foreach (var i in _ico)
         {
             i.RemoveCard();
             i.transform.GetChild(0).GetChild(0).GetChild(3).gameObject.SetActive(false);
@@ -55,7 +54,7 @@ public class ItemManager : MonoBehaviour
             capacityNums.Add(num);
         }
 
-        for(int i = 0; i < selectNums.Length; i++)
+        for (int i = 0; i < selectNums.Length; i++)
         {
             int select = UnityEngine.Random.Range(0, capacityNums.Count - 1);
             selectNums[i] = capacityNums[select];
@@ -65,23 +64,22 @@ public class ItemManager : MonoBehaviour
         int order = 0;
         foreach (var i in _ico)
         {
-            Type itemName = null;
-            if (isBuff)
-                itemName = Type.GetType(""+(BuffItem)selectNums[order++]);
-            else
-                itemName = Type.GetType("Item"+(DebuffItem)selectNums[order++]);
-
             ItemCardCtrlObj icco = i.transform.GetChild(0).gameObject.GetComponent<ItemCardCtrlObj>();
-            if(icco != null)
+            if (icco != null)
             {
                 Destroy(icco);
             }
+        }
+        foreach (var i in _ico)
+        {
+            Type itemName = null;
+            if (isBuff)
+                itemName = Type.GetType("" + (BuffItem)selectNums[order++]);
+            else
+                itemName = Type.GetType("" + (DebuffItem)selectNums[order++]);
 
-            i.transform.GetChild(0).gameObject.AddComponent(itemName);
-            i.transform.GetChild(0).GetComponent<ItemCardCtrlObj>().Init();
 
-            i.AppearCard();
-            i.transform.GetChild(0).GetChild(0).GetChild(3).gameObject.SetActive(true);
+            i.SetItem(itemName);
         }
 
     }

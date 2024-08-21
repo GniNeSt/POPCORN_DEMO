@@ -29,9 +29,19 @@ public class InGameManager : TSingleTon<InGameManager>
 
     bool _itemFlag;
     bool _submitError;
+    
+    int _maxHp = 10;
     int _hpCount = 10;
     int _sceneNum = 0;
     public int _targetScore = 666;
+    public int _btnRisk
+    {
+        get;set;
+    }
+    public int _errorRisk
+    {
+        get; set;
+    }
     public bool _isBuffItem
     {
         get; set;
@@ -66,6 +76,12 @@ public class InGameManager : TSingleTon<InGameManager>
     public void PlusMaxTime(float time)
     {
         _maxTime += time;
+    }
+    public void RecoverHP(int i)
+    {
+        _hpCount += i;
+        if (_hpCount >= _maxHp)
+            _hpCount = _maxHp;
     }
     public void setBinarySetting(int place, bool isOn = true)
     {
@@ -190,7 +206,9 @@ public class InGameManager : TSingleTon<InGameManager>
             _numBoxCtrlObjs.Add(g.GetComponent<NumBoxCtrlObj>());
         }
 
-
+        _btnRisk = 1;
+        _errorRisk = 1;
+        _maxHp = 10;
         //임시 저장 ==============
         SaveManager._instance.Load("정효준");
     }
@@ -259,6 +277,7 @@ public class InGameManager : TSingleTon<InGameManager>
                 _curTime -= Time.deltaTime;
                 if (_curTime <= _maxTime - 2)
                 {
+                    _itemFlag = false;
                     _dealerCtrlObj.TurnStart();
                     _curTime = _maxTime;
                     _curStatus = InGameStatus.InGame;
@@ -271,7 +290,7 @@ public class InGameManager : TSingleTon<InGameManager>
                     if (_curTime < 0 || _submitError)
                     {
                         _submitError = false;
-                        _hpCount--;
+                        _hpCount-=_errorRisk;
                         if (_hpCount <= 0)
                         {
                             PlayEndScene();
