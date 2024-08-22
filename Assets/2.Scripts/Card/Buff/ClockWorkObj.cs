@@ -7,7 +7,7 @@ public class ClockWorkObj : ItemCardCtrlObj
     public override void Init()
     {
         base.Init();
-        SetCardInfo(CardType.Buff, "보조 태엽 장치", "시간 + 5");   
+        SetCardInfo(CardType.Buff, "보조 태엽 장치", "시간 + 5", "Gear1");   
     }
     public override void CardEffect()
     {

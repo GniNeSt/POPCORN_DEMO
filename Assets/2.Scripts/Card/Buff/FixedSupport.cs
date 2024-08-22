@@ -7,7 +7,7 @@ public class FixedSupport : ItemCardCtrlObj
     public override void Init()
     {
         base.Init();
-        SetCardInfo(CardType.Buff, "고정 지지대", "결과 확인 패드가\n가려지지 않는다.");
+        SetCardInfo(CardType.Buff, "고정 지지대", "결과 확인 패드가\n가려지지 않는다.", "Fixed");
     }
     public override void CardEffect()
     {

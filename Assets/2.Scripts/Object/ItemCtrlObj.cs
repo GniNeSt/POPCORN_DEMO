@@ -18,6 +18,15 @@ public class ItemCtrlObj : MonoBehaviour
 
         transform.parent.GetComponent<ItemManager>().ItemSelect();
     }
+    public void OnMouseEnter()
+    {
+        transform.GetChild(0).GetComponent<RectTransform>().localScale = new Vector3(1.2f, 1.2f, 1);
+    }
+    public void OnMouseExit()
+    {
+        transform.GetChild(0).GetComponent<RectTransform>().localScale = Vector3.one;
+
+    }
     public void SetItem(System.Type type)
     {
         transform.GetChild(0).gameObject.AddComponent(type);
@@ -33,9 +42,11 @@ public class ItemCtrlObj : MonoBehaviour
     {
         Destroy(_icco);
         GetComponent<Animator>().Play("ItemCardRemove");
+        transform.GetChild(0).GetComponent<RectTransform>().localScale = Vector3.one;
     }
     public void AppearCard()
     {
+        transform.GetChild(0).GetComponent<RectTransform>().localScale = Vector3.one;
         GetComponent<Animator>().Play("ItemCardSpawn");
     }
 }

@@ -43,6 +43,7 @@ public class DialogObj : MonoBehaviour//PopUpUI Load로 Init함수를 호출하자!!!
         {
             _dialogText.text = temp + "_";    //타자 연출
             temp += t;  //저장
+            SoundManager._instance.PlaySFX(SoundManager.SFXClipName.OldTypewriter);
             yield return new WaitForSeconds(_nextTextDelayTime);  //출력 딜레이
            
             if (_omission)
@@ -117,6 +118,7 @@ public class DialogObj : MonoBehaviour//PopUpUI Load로 Init함수를 호출하자!!!
     {
         _omission = true;
     }
+
     //private void OnGUI()
     //{
     //    GUIStyle style = new GUIStyle("button");

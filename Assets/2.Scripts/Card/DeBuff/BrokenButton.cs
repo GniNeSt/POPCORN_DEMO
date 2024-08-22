@@ -8,7 +8,7 @@ public class BrokenButton : ItemCardCtrlObj
     {
         base.Init();
 
-        SetCardInfo(CardType.Debuff, "버튼 과부하", "피로도 증가치가 1 증가한다.");
+        SetCardInfo(CardType.Debuff, "버튼 과부하", "피로도 증가치가 1 증가한다.", "XBtn");
     }
     public override void CardEffect()
     {

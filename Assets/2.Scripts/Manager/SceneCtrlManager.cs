@@ -7,7 +7,8 @@ public class SceneCtrlManager : TSingleTon<SceneCtrlManager>
     public enum SceneName
     {
         Start,
-        InGame
+        InGame,
+        Tutorial
     }
     public void GoScene(SceneName sc)
     {

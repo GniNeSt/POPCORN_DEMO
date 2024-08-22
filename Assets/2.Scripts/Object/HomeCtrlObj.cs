@@ -1,9 +1,11 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 public class HomeCtrlObj : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI[] _tmps;
+    [SerializeField] Image[] _imgs;
     bool _clickBtn;
     IEnumerator GotoOtherScene()
     {
@@ -13,8 +15,12 @@ public class HomeCtrlObj : MonoBehaviour
         {
             color.a -= 0.05f;
             foreach (var tmp in _tmps)
-            {
+            {                
                 tmp.color = color;
+            }
+            foreach(var img in _imgs)
+            {
+                img.color = color;
             }
             if (color.a <= 0)
             {
@@ -24,7 +30,7 @@ public class HomeCtrlObj : MonoBehaviour
         }
 
         //SceneManager
-        SceneCtrlManager._instance.GoScene(SceneCtrlManager.SceneName.InGame);
+        SceneCtrlManager._instance.GoScene(SceneCtrlManager.SceneName.Tutorial);
         yield return null;
     }
     IEnumerator StartScene()
@@ -58,20 +64,22 @@ public class HomeCtrlObj : MonoBehaviour
         if (_clickBtn) return;
         StartCoroutine(GotoOtherScene());
     }
-    public void GotoRecord()
+    public void ExitGame()
     {
         if (_clickBtn) return;
-        StartCoroutine(GotoOtherScene());
+        Application.Quit();
     }
     public void EnterTMPColorSet(TextMeshProUGUI tmp)
     {
         Color color = Color.white;
         color.a = 0.5f;
         tmp.color = color;
+        tmp.transform.GetChild(0).gameObject.SetActive(true);
     }
     public void ExitTMPColorSet(TextMeshProUGUI tmp)
     {
         Color color = Color.white;
         tmp.color = color;
+        tmp.transform.GetChild(0).gameObject.SetActive(false);
     }
 }

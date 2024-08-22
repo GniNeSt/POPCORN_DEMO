@@ -7,8 +7,7 @@ public class SoundManager : TSingleTon<SoundManager>
     {
         Start,
         InGame,
-        Hard,
-        GameOver,
+        Tutorial,
 
         max
     }
@@ -19,6 +18,8 @@ public class SoundManager : TSingleTon<SoundManager>
         Locked,
         Heal,
         Hurt,
+        OldTypewriter,
+        NumBoxReset,
 
         max
     }

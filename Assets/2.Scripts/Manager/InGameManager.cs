@@ -151,6 +151,7 @@ public class InGameManager : TSingleTon<InGameManager>
     }
     public void ResetNumCardNPad()
     {
+        bool _isChanged = false;
         _dealerCtrlObj.RemoveCards();
         for (int i = 0; i < _binarySetting.Length; i++)
         {
@@ -162,12 +163,13 @@ public class InGameManager : TSingleTon<InGameManager>
         {
             if (nbc._state == NumBoxCtrlObj.NumState.one)
             {
-                nbc.NumReset();
+                _isChanged = nbc.NumReset();
             }
             nbc.isChanging = false;
         }
         _cardsDict = new Dictionary<int, CardCtrlObj>();
-
+        if(_isChanged)
+            SoundManager._instance.PlaySFX(SoundManager.SFXClipName.NumBoxReset);
     }
     protected override void Init()
     {
@@ -209,8 +211,6 @@ public class InGameManager : TSingleTon<InGameManager>
         _btnRisk = 1;
         _errorRisk = 1;
         _maxHp = 10;
-        //임시 저장 ==============
-        SaveManager._instance.Load("정효준");
     }
     public void SetGameStatus(InGameStatus status)
     {

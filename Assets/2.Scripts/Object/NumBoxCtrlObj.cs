@@ -34,7 +34,7 @@ public class NumBoxCtrlObj : MonoBehaviour
     }
     public void NumChangeDown()
     {
-        if (isChanging) return;
+        if (isChanging || InGameManager._instance._InGameStatus != InGameManager.InGameStatus.InGame) return;
         isChanging = true;
 
         InGameManager inGameManager = InGameManager._instance;
@@ -83,13 +83,15 @@ public class NumBoxCtrlObj : MonoBehaviour
         _animator.SetInteger("State", 0);
         isChanging = false;
     }
-    public void NumReset()
+    public bool NumReset()
     {
+        bool value = false;
         switch (_curState)
         {
             case NumState.zero:
                 break;
             case NumState.one:
+                value = true;
                 TMPS[1].text = "0";
                 TMPS[2].text = "0";
                 _animator.SetInteger("State", 1);
@@ -97,5 +99,6 @@ public class NumBoxCtrlObj : MonoBehaviour
                 break;
         }
         isChanging = false;
+        return value;
     }
 }

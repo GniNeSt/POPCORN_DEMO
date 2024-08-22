@@ -8,7 +8,7 @@ public class SaveManager : TSingleTon<SaveManager>
     int _maxScore;
     int _userListCount;
     int _userRank;
-    const string userList = "userList";
+    //const string userList = "userList";
 
     public string _nameInfo
     {
@@ -21,21 +21,25 @@ public class SaveManager : TSingleTon<SaveManager>
     protected override void Init()
     {
         base.Init();
-        int num = 0;
-        while (true)
-        {
-            if(!PlayerPrefs.HasKey(userList + num))
-                return;
-            else
-            {
-                num++;
-            }
-        }
-        _userListCount = num;
+        //int num = 0;
+        //while (true)
+        //{
+        //    if(!PlayerPrefs.HasKey(userList + num))
+        //    {
+        //        _userListCount = 0;
+        //        return;
+        //    }
+        //    else
+        //    {
+        //        num++;
+        //    }
+        //}
+        //_userListCount = num;
 
     }
     public bool Load(string userName)
     {
+        PlayerPrefs.SetString("LastPlayer", userName);
         if (!PlayerPrefs.HasKey("BGMValue"))
         {
             PlayerPrefs.SetFloat("BGMValue", 0.5f);
@@ -57,6 +61,7 @@ public class SaveManager : TSingleTon<SaveManager>
         {
             Debug.Log("새로운 유저 정보");
             PlayerPrefs.SetInt(userName, 999);
+            
             _userListCount++;
             PlayerPrefs.SetInt(userName + "Score", 0);
             _name = userName;

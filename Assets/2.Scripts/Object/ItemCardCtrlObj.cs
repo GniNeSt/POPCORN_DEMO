@@ -1,28 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-public class ItemCardCtrlObj: MonoBehaviour
+public class ItemCardCtrlObj : MonoBehaviour
 {
-    public Sprite _BGSprite,_IconSprite;
+    public Sprite _BGSprite, _IconSprite;
     public string _cardName;
-    [TextArea]public string _effectString;
+    [TextArea] public string _effectString;
     public CardType _cardType;
     Image _BGImg, _IconImg;
     TextMeshProUGUI _nameTMP, _effectTMP;
-    
+
     public enum CardType
     {
         Buff,
         Debuff
     }
-    public void SetCardInfo(CardType ct, string name, string effect) // icon sprite 추가
+    public void SetCardInfo(CardType ct, string name, string effect, string ImgName) // icon sprite 추가
     {
         _cardType = ct;
         _cardName = name;
         _effectString = effect;
 
+        switch (ct)
+        {
+            case CardType.Buff:
+                _BGImg.color = Color.white;
+                break;
+            case CardType.Debuff:
+                _BGImg.color = Color.red;
+                break;
+        }
+
+        _IconImg.sprite = Resources.Load<Sprite>("Images/" + ImgName);
         _nameTMP.text = name;
         _effectTMP.text = effect;
         //Debug.LogFormat("카드 정보 : {0},{1},{2}", string.Format("", ct), _nameTMP.text, _effectTMP.text);
@@ -45,7 +54,7 @@ public class ItemCardCtrlObj: MonoBehaviour
         {
             Debug.Log("dialogManager가 초기화 되지 않았습니다.");
         }
-        else if(_cardType == CardType.Buff)
+        else if (_cardType == CardType.Buff)
         {
             _dialogManager.PrintDialog(0, DialogManager.DialogProperty.Item);
         }

@@ -9,7 +9,10 @@ public class StartObj : MonoBehaviour
         GameManager._instance.CheckPlayerSet();
 
         SoundManager._instance.PlayBGM(SoundManager.BGMClipName.Start);
-        SaveManager._instance.Load("dummie");
+        if(PlayerPrefs.HasKey("LastPlayer"))
+            SaveManager._instance.Load(PlayerPrefs.GetString("LastPlayer"));
+        else
+            SaveManager._instance.Load("Q");
 
     }
 }
