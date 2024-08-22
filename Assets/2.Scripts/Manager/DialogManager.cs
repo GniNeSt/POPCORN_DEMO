@@ -8,6 +8,7 @@ public class DialogManager : MonoBehaviour
     [SerializeField] Dialog[] _StartDialogs;
     [SerializeField] Dialog[] _EndingDialogs;
     [SerializeField] Dialog[] _ItemEquipDialogs;
+    InGameManager _inGameManager;
     public enum DialogType
     {
         DialogCanvasUp,
@@ -53,6 +54,8 @@ public class DialogManager : MonoBehaviour
         //    _dialogBox[i] = go.GetComponent<DialogObj>();
         //    _dialogBox[i].InitDalog();
         //}
+        _inGameManager = InGameManager._instance;
+
         foreach (var db in _dialogBox)
         {
             db.transform.GetChild(0).gameObject.SetActive(false);
@@ -62,21 +65,29 @@ public class DialogManager : MonoBehaviour
     }
     public void InitDialog()
     {
-        _StartDialogs[1] =
-            new Dialog(string.Format("{0}{1}{2}{3}{4}", "이번 목표점수는 \"", InGameManager._instance._targetScore,
-                "\",\n기회는 \"", InGameManager._instance._curHp,"\"입니다."));
+        if (_inGameManager._needScore >= 99999)
+        {
+            _StartDialogs[1] =
+            new Dialog("이번 목표 점수는 없습니다. \n최대한 많은 점수를 얻으십시오.");
+        }
+        else
+        {
+            _StartDialogs[1] =
+                new Dialog(string.Format("{0}{1}{2}{3}{4}", "이번 목표점수는 \"", _inGameManager._needScore,
+                    "\",\n기회는 \"", InGameManager._instance._curHp, "\"입니다."));
+        }
         _basicDialogs[0] =
-            new Dialog(string.Format("{0}{1}{2}", "훌륭합니다.\n당신에게 남은 기회는 \"", InGameManager._instance._curHp,
+            new Dialog(string.Format("{0}{1}{2}", "훌륭합니다.\n당신에게 남은 기회는 \"", _inGameManager._curHp,
                 "\"입니다."));
         _basicDialogs[1] =
-         new Dialog(string.Format("{0}{1}{2}", "이런, 실수하셨군요.\n남은 기회는 \"", InGameManager._instance._curHp,
+         new Dialog(string.Format("{0}{1}{2}", "이런, 실수하셨군요.\n남은 기회는 \"", _inGameManager._curHp,
         "\"입니다."));
-        _basicDialogs[2] = new Dialog(string.Format("{0}{1}{2}", "이런....\n기회가 \"", InGameManager._instance._curHp,
+        _basicDialogs[2] = new Dialog(string.Format("{0}{1}{2}", "이런....\n기회가 \"", _inGameManager._curHp,
         "\"밖에 남지 않았습니다."));
         _basicDialogs[3] = new Dialog("...훌륭합니다.");
     }
     public void PrintDialog(int num, DialogProperty dP = DialogProperty.InGame, bool wait = false)
-    {        
+    {
         InitDialog();
         switch (dP)
         {

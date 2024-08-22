@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class InGameManager : TSingleTon<InGameManager>
     ItemManager _itemManager;
 
     Image _endPanelImg;
+    Image _hurtBGImg;
 
     List<NumBoxCtrlObj> _numBoxCtrlObjs;
     [SerializeField] int _result;
@@ -34,10 +36,15 @@ public class InGameManager : TSingleTon<InGameManager>
     int _maxHp = 10;
     int _hpCount = 10;
     int _sceneNum = 0;
-    public int _targetScore = 666;
+    int _targetScore = 666;
 
     int _itemEquipScore = 300;
     int _curItemPoint = 0;
+    
+    public int _needScore
+    {
+        get { return _targetScore; }
+    }
     public int _btnRisk
     {
         get; set;
@@ -76,6 +83,28 @@ public class InGameManager : TSingleTon<InGameManager>
     public bool _dialogClickEvent
     {
         get; set;
+    }
+    IEnumerator HurtBGStart()
+    {
+        Color color = _hurtBGImg.color;
+        color.a = 0.15f;
+        _hurtBGImg.color = color;
+        while (true)
+        {
+            color.a -= 0.05f;
+            _hurtBGImg.color = color;
+            if (color.a <= 0)
+            {
+                break;
+            }
+            yield return new WaitForSeconds(0.05f);
+        }
+
+        yield return null;
+    }
+    public void SetSubmitBool(bool result)
+    {
+        _submitError = result;
     }
     public void PlusMaxTime(float time)
     {
@@ -152,7 +181,6 @@ public class InGameManager : TSingleTon<InGameManager>
         {
             Debug.Log("제출한 번호가 없습니다.");
             _submitError = true;
-
         }
     }
     public void ResetNumCardNPad()
@@ -192,6 +220,7 @@ public class InGameManager : TSingleTon<InGameManager>
         _cardsDict = new Dictionary<int, CardCtrlObj>();
         _curStatus = InGameStatus.None;
 
+
         GameObject go = GameObject.FindGameObjectWithTag("HintBox");
         _hintBox = go.GetComponent<HintChecker>();
         go = GameObject.FindGameObjectWithTag("Dealer");
@@ -204,7 +233,12 @@ public class InGameManager : TSingleTon<InGameManager>
         _timeTMP.text = "" + (int)_maxTime;
         go = GameObject.FindGameObjectWithTag("ItemManager");
         _itemManager = go.GetComponent<ItemManager>();
+        go = GameObject.FindGameObjectWithTag("HurtBG");
+        _hurtBGImg = go.GetComponent<Image>();
 
+        Color color = _hurtBGImg.color;
+        color.a = 0;
+        _hurtBGImg.color = color;
 
         GameObject[] gos = new GameObject[_binaryCellCount];
         _numBoxCtrlObjs = new List<NumBoxCtrlObj>();
@@ -217,6 +251,27 @@ public class InGameManager : TSingleTon<InGameManager>
         _btnRisk = 1;
         _errorRisk = 1;
         _maxHp = 10;
+        if(SaveManager._instance._scoreInfo < 666)
+        {
+            _targetScore = 666;
+            _itemEquipScore = 150;
+
+        }
+        else if(SaveManager._instance._scoreInfo < 999)
+        {
+            _targetScore = 999;
+            _itemEquipScore = 300;
+        }
+        else if(SaveManager._instance._scoreInfo < 1500)
+        {
+            _targetScore = 1500;
+            _itemEquipScore = 400;
+        }
+        else
+        {
+            _targetScore = 99999;
+            _itemEquipScore = 400;
+        }
     }
     public void SetGameStatus(InGameStatus status)
     {
@@ -301,6 +356,8 @@ public class InGameManager : TSingleTon<InGameManager>
                     if (_curTime < 0 || _submitError)
                     {
                         _submitError = false;
+                        SoundManager._instance.PlaySFX(SoundManager.SFXClipName.Locked);
+                        StartCoroutine(HurtBGStart());
                         _hpCount -= _errorRisk;
                         if (_hpCount <= 0)
                         {

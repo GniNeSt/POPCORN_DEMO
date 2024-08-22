@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StrictSupervision : ItemCardCtrlObj
+public class UnfairJudgment : ItemCardCtrlObj
 {
     public override void Init()
     {
         base.Init();
-        SetCardInfo(CardType.Debuff, "엄격한 심사", "플레이어는 조합 실패 시\n기회 차감 + 1.", "StrictDia");
+        SetCardInfo(CardType.Debuff, "불공정 판결", "다음 턴에 무조건 실패한다.", "UnfairJudgment");
     }
     public override void CardEffect()
     {
         base.CardEffect();
         //
-        InGameManager._instance._errorRisk++;
+        InGameManager._instance.SetSubmitBool(true);
     }
 }
