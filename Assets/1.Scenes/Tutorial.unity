@@ -1391,7 +1391,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dialogText: {fileID: 374298514}
   _endTMP: {fileID: 703848258}
-  _nextTextDelayTime: 0.2
+  _nextTextDelayTime: 0.1
   _endTMPdelayTime: 0.7
   _inputBoxObj: {fileID: 151816334}
 --- !u!114 &1561465376

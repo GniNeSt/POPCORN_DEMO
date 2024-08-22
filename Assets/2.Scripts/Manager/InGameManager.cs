@@ -29,14 +29,18 @@ public class InGameManager : TSingleTon<InGameManager>
 
     bool _itemFlag;
     bool _submitError;
-    
+    bool _spreadFlag;
+
     int _maxHp = 10;
     int _hpCount = 10;
     int _sceneNum = 0;
     public int _targetScore = 666;
+
+    int _itemEquipScore = 300;
+    int _curItemPoint = 0;
     public int _btnRisk
     {
-        get;set;
+        get; set;
     }
     public int _errorRisk
     {
@@ -134,13 +138,15 @@ public class InGameManager : TSingleTon<InGameManager>
             Debug.LogFormat("제출한 번호를 찾았습니다! : {0}", _result);
             _dialogManager.PrintDialog(0);
             _curScore += _result;
+
+            _curItemPoint += _result;
+
             _scoreCtrlObj.setText("" + _curScore);
             ResetNumCardNPad();
             _curTime = _maxTime;
 
 
             SetGameStatus(InGameStatus.None);
-            //클리어 추가할것 0814
         }
         else
         {
@@ -168,7 +174,7 @@ public class InGameManager : TSingleTon<InGameManager>
             nbc.isChanging = false;
         }
         _cardsDict = new Dictionary<int, CardCtrlObj>();
-        if(_isChanged)
+        if (_isChanged)
             SoundManager._instance.PlaySFX(SoundManager.SFXClipName.NumBoxReset);
     }
     protected override void Init()
@@ -242,8 +248,9 @@ public class InGameManager : TSingleTon<InGameManager>
                 }
                 else
                 {
-                    if (true)  ///////아이템 획득 조건////////////////////////
+                    if (_curItemPoint >= _itemEquipScore)  ///////아이템 획득 조건////////////////////////
                     {   //300이상
+                        _curItemPoint = 0;
                         _itemFlag = false;
                         _isBuffItem = true;
                         _curStatus = InGameStatus.Item;
@@ -274,23 +281,27 @@ public class InGameManager : TSingleTon<InGameManager>
                 }
                 break;
             case InGameStatus.SpreadCards:
-                _curTime -= Time.deltaTime;
-                if (_curTime <= _maxTime - 2)
+                if (!_spreadFlag)
                 {
-                    _itemFlag = false;
-                    _dealerCtrlObj.TurnStart();
-                    _curTime = _maxTime;
-                    _curStatus = InGameStatus.InGame;
+                    _curTime -= Time.deltaTime;
+                    if (_curTime <= _maxTime - 2)
+                    {
+                        _itemFlag = false;
+                        _dealerCtrlObj.TurnStart();
+                        _curTime = _maxTime;
+                        _spreadFlag = true;
+                    }
                 }
                 break;
             case InGameStatus.InGame:
+                _spreadFlag = false;
                 if (_curTime > 0)
                 {
                     _curTime -= Time.deltaTime;
                     if (_curTime < 0 || _submitError)
                     {
                         _submitError = false;
-                        _hpCount-=_errorRisk;
+                        _hpCount -= _errorRisk;
                         if (_hpCount <= 0)
                         {
                             PlayEndScene();

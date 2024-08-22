@@ -1,10 +1,35 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 public class ItemManager : MonoBehaviour
 {
     ItemCtrlObj[] _ico;
+    [SerializeField] GameObject _coverPanel;
+    IEnumerator DebuffSelect()
+    {
+        _coverPanel.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        int count = UnityEngine.Random.Range(20, 50);
+        for (int i = 0; i < count; i++)
+        {
+            _ico[i%3].OnMouseEnter();
+            _ico[(i+1) % 3].OnMouseExit();
+            _ico[(i+2) % 3].OnMouseExit();
 
+            if (i < count-5)
+                yield return new WaitForSeconds(0.07f);
+            else
+                yield return new WaitForSeconds(0.5f);
+        }
+        _ico[count % 3].OnMouseEnter();
+        _ico[(count + 1) % 3].OnMouseExit();
+        _ico[(count + 2) % 3].OnMouseExit();
+        yield return new WaitForSeconds(1.3f);
+        _ico[count%3].OnClick();
+        _coverPanel.SetActive(false);
+        yield return null;
+    }
     public enum BuffItem
     {
         //buff
@@ -30,6 +55,7 @@ public class ItemManager : MonoBehaviour
     private void Awake()
     {
         _ico = GetComponentsInChildren<ItemCtrlObj>();
+        _coverPanel.SetActive(false);
     }
     public void ItemSelect()
     {
@@ -81,6 +107,7 @@ public class ItemManager : MonoBehaviour
 
             i.SetItem(itemName);
         }
-
+        if (!isBuff)
+            StartCoroutine(DebuffSelect());
     }
 }
