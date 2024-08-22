@@ -317,7 +317,7 @@ public class InGameManager : TSingleTon<InGameManager>
 
                 }
                 break;
-            case InGameStatus.Start://수정!!!!!!!!!!!!
+            case InGameStatus.Start:
                 if (_sceneNum >= 2)
                 {
                     _curTime -= Time.deltaTime;
@@ -368,7 +368,7 @@ public class InGameManager : TSingleTon<InGameManager>
                             _dialogManager.PrintDialog(1);
                             _curTime = _maxTime;
                             ResetNumCardNPad();
-                            if (_curStatus != InGameStatus.End) //end & spread & item 추가예쩡 0814
+                            if (_curStatus != InGameStatus.End)
                                 SetGameStatus(InGameStatus.None);
                         }
                     }
