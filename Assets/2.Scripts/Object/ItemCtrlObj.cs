@@ -25,7 +25,6 @@ public class ItemCtrlObj : MonoBehaviour
     public void OnMouseExit()
     {
         transform.GetChild(0).GetComponent<RectTransform>().localScale = Vector3.one;
-
     }
     public void SetItem(System.Type type)
     {

@@ -15,6 +15,7 @@ public class ItemManager : MonoBehaviour
         AuxiliaryCharger,   //焊炼 面傈扁
         ActiveTrust, //利必利 脚汾
 
+
         Max
     }
     public enum DebuffItem
@@ -45,18 +46,23 @@ public class ItemManager : MonoBehaviour
                 yield return new WaitForSeconds(0.5f);
             SoundManager._instance.PlaySFX(SoundManager.SFXClipName.Hurt);
         }
+        
         _ico[count % 3].OnMouseEnter();
         _ico[(count + 1) % 3].OnMouseExit();
         _ico[(count + 2) % 3].OnMouseExit();
+        
         yield return new WaitForSeconds(1.3f);
+        
         _ico[count % 3].OnClick();
         SoundManager._instance.PlaySFX(SoundManager.SFXClipName.Patterned);
         _coverPanel.SetActive(false);
+
         yield return null;
     }
     private void Awake()
     {
         _ico = GetComponentsInChildren<ItemCtrlObj>();
+
         _coverPanel.SetActive(false);
     }
     public void ItemSelect()
@@ -81,7 +87,6 @@ public class ItemManager : MonoBehaviour
         {
             capacityNums.Add(num);
         }
-
         for (int i = 0; i < selectNums.Length; i++)
         {
             int select = UnityEngine.Random.Range(0, capacityNums.Count);
@@ -89,7 +94,6 @@ public class ItemManager : MonoBehaviour
             Debug.Log(capacityNums[select]);
             capacityNums.Remove(capacityNums[select]);
         }
-
         int order = 0;
         foreach (var i in _ico)
         {
@@ -106,7 +110,6 @@ public class ItemManager : MonoBehaviour
                 itemName = Type.GetType("" + (BuffItem)selectNums[order++]);
             else
                 itemName = Type.GetType("" + (DebuffItem)selectNums[order++]);
-
 
             i.SetItem(itemName);
         }

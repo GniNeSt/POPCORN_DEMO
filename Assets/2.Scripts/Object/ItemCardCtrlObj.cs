@@ -34,6 +34,7 @@ public class ItemCardCtrlObj : MonoBehaviour
         _IconImg.sprite = Resources.Load<Sprite>("Images/" + ImgName);
         _nameTMP.text = name;
         _effectTMP.text = effect;
+
         //Debug.LogFormat("카드 정보 : {0},{1},{2}", string.Format("", ct), _nameTMP.text, _effectTMP.text);
         Debug.LogFormat("내부 정보 : {0},{1},{2}", string.Format("", ct), name, effect);
 

@@ -404,7 +404,6 @@ public class InGameManager : TSingleTon<InGameManager>
                     _itemManager.SetItem(_isBuffItem);
                 }
                 break;
-
         }
     }
 }
