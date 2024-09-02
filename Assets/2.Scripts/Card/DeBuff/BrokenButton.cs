@@ -14,6 +14,6 @@ public class BrokenButton : ItemCardCtrlObj
     {
         base.CardEffect();
         //
-        InGameManager._instance._btnRisk++;
+        InGameManager._instance.SetFatigue(1);
     }
 }

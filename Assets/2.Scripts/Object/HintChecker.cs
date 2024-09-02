@@ -41,6 +41,8 @@ public class HintChecker : MonoBehaviour
         _curvRectTransform = _curvImg.GetComponent<RectTransform>();
         _curvHeight = _curvRectTransform.sizeDelta.y;
         _curvPos = _curvRectTransform.anchoredPosition;
+
+        _resultTMP.text = "0";
     }
     public void SetResult(string result)
     {

@@ -6,6 +6,7 @@ public class NameQTypo : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI _dialogText;
     [SerializeField] TextMeshProUGUI _endTMP;
+    [SerializeField] TextMeshProUGUI _placeHoldTMP;
     [SerializeField]float _nextTextDelayTime = 1f;
     [SerializeField] float _endTMPdelayTime = 1.0f;
     [SerializeField] GameObject _inputBoxObj;
@@ -35,6 +36,10 @@ public class NameQTypo : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         _inputBoxObj.SetActive(true);
         yield return null;
+    }
+    public void DeletePTMP()
+    {
+        _placeHoldTMP.text = "";
     }
     public void PrintTypo(string str)
     {

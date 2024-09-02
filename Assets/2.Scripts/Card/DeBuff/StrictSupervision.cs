@@ -13,6 +13,6 @@ public class StrictSupervision : ItemCardCtrlObj
     {
         base.CardEffect();
         //
-        InGameManager._instance._errorRisk++;
+        InGameManager._instance.SetErrorRisk(1);
     }
 }

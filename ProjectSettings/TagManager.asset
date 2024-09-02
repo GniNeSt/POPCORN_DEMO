@@ -15,6 +15,10 @@ TagManager:
   - EndPanel
   - ItemManager
   - HurtBG
+  - UpperTimeTMP
+  - UpperFatigueTMP
+  - UpperOpportunity
+  - FailureTMP
   layers:
   - Default
   - TransparentFX

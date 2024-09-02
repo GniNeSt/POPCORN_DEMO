@@ -861,7 +861,19 @@ MonoBehaviour:
       m_Calls: []
   m_OnSelect:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1561465375}
+        m_TargetAssemblyTypeName: NameQTypo, Assembly-CSharp
+        m_MethodName: DeletePTMP
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnDeselect:
     m_PersistentCalls:
       m_Calls: []
@@ -1391,6 +1403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dialogText: {fileID: 374298514}
   _endTMP: {fileID: 703848258}
+  _placeHoldTMP: {fileID: 2052218026}
   _nextTextDelayTime: 0.1
   _endTMPdelayTime: 0.7
   _inputBoxObj: {fileID: 151816334}

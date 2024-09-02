@@ -10,6 +10,12 @@ public class InGameManager : TSingleTon<InGameManager>
     ScoreCtrlObj _scoreCtrlObj;
     TextMeshProUGUI _timeTMP;
 
+    TextMeshProUGUI _maxTimeTMP;
+    TextMeshProUGUI _fatigueTMP;
+    TextMeshProUGUI _failureTMP;
+    TextMeshProUGUI _opportunityTMP;
+
+
     DialogManager _dialogManager;
     ItemManager _itemManager;
 
@@ -109,12 +115,15 @@ public class InGameManager : TSingleTon<InGameManager>
     public void PlusMaxTime(float time)
     {
         _maxTime += time;
+        _maxTimeTMP.text = ((int)_maxTime).ToString();
     }
     public void RecoverHP(int i)
     {
         _hpCount += i;
         if (_hpCount >= _maxHp)
             _hpCount = _maxHp;
+
+        _opportunityTMP.text = _hpCount.ToString();
     }
     public void setBinarySetting(int place, bool isOn = true)
     {
@@ -156,6 +165,11 @@ public class InGameManager : TSingleTon<InGameManager>
         {
             _binaryNum.Add(i);
         }
+    }
+    public void SetFatigue(int add)
+    {
+        _btnRisk += add;
+        _fatigueTMP.text = _btnRisk.ToString();
     }
     public void FindResult()
     {
@@ -236,6 +250,25 @@ public class InGameManager : TSingleTon<InGameManager>
         go = GameObject.FindGameObjectWithTag("HurtBG");
         _hurtBGImg = go.GetComponent<Image>();
 
+        go = GameObject.FindGameObjectWithTag("UpperTimeTMP");
+        _maxTimeTMP = go.GetComponent<TextMeshProUGUI>();
+        go = GameObject.FindGameObjectWithTag("UpperFatigueTMP");
+        _fatigueTMP = go.GetComponent<TextMeshProUGUI>();
+        go = GameObject.FindGameObjectWithTag("FailureTMP");
+        _failureTMP = go.GetComponent<TextMeshProUGUI>();
+        go = GameObject.FindGameObjectWithTag("UpperOpportunity");
+        _opportunityTMP = go.GetComponent<TextMeshProUGUI>();
+
+        _btnRisk = 1;
+        _errorRisk = 1;
+        _maxHp = 10;
+
+        _maxTimeTMP.text = ((int)_maxTime).ToString();
+        _fatigueTMP.text = _btnRisk.ToString();
+        _failureTMP.text = _errorRisk.ToString();
+        _opportunityTMP.text = _hpCount.ToString();
+        
+
         Color color = _hurtBGImg.color;
         color.a = 0;
         _hurtBGImg.color = color;
@@ -248,9 +281,6 @@ public class InGameManager : TSingleTon<InGameManager>
             _numBoxCtrlObjs.Add(g.GetComponent<NumBoxCtrlObj>());
         }
 
-        _btnRisk = 1;
-        _errorRisk = 1;
-        _maxHp = 10;
         if(SaveManager._instance._scoreInfo < 666)
         {
             _targetScore = 666;
@@ -272,6 +302,11 @@ public class InGameManager : TSingleTon<InGameManager>
             _targetScore = 99999;
             _itemEquipScore = 400;
         }
+    }
+    public void SetErrorRisk(int error)
+    {
+        _errorRisk += error;
+        _failureTMP.text = _errorRisk.ToString();
     }
     public void SetGameStatus(InGameStatus status)
     {
@@ -359,6 +394,9 @@ public class InGameManager : TSingleTon<InGameManager>
                         SoundManager._instance.PlaySFX(SoundManager.SFXClipName.Locked);
                         StartCoroutine(HurtBGStart());
                         _hpCount -= _errorRisk;
+
+                        _opportunityTMP.text = _hpCount.ToString();
+
                         if (_hpCount <= 0)
                         {
                             PlayEndScene();
