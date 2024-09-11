@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class TSingleTon<T> : MonoBehaviour where T : TSingleTon<T>
 {
     static volatile T _uniqueInstance = null;
@@ -37,3 +36,4 @@ public class TSingleTon<T> : MonoBehaviour where T : TSingleTon<T>
         DontDestroyOnLoad(this);
     }
 }
+
